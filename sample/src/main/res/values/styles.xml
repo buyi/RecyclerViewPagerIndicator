@@ -78,7 +78,7 @@
         <item name="centered">true</item>
     </style>
 
-    <style name="Widget"></style>
+    <style name="Widget" parent="AppTheme.NoActionBar"></style>
 
     <style name="Widget.TabPageIndicator" parent="Widget">
         <item name="android:gravity">center</item>

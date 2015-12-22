@@ -1,7 +1,7 @@
 package com.viewpagerindicator.as.sample;
 
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -12,7 +12,7 @@ import java.util.Random;
 
 
 
-public abstract class BaseSampleActivity extends FragmentActivity {
+public abstract class BaseSampleActivity extends AppCompatActivity {
     private static final Random RANDOM = new Random();
 
     TestFragmentAdapter mAdapter;

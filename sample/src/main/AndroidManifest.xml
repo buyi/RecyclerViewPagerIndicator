@@ -28,6 +28,16 @@
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".SampleCirclesDefaultRecycler"
+            android:label="Circles/DefaultRecycler">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".SampleCirclesInitialPage"
             android:label="Circles/Initial Page">
