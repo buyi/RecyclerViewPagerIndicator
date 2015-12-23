@@ -1,4 +1,4 @@
-package com.viewpagerindicator.as.sample.recycler;
+package com.viewpagerindicator.as.recycler;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.viewpagerindicator.as.sample.R;
+import com.viewpagerindicator.as.R;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -75,11 +75,11 @@ public abstract class FragmentStatePagerAdapter extends RecyclerView.Adapter<Fra
         if (mCurTransaction == null) {
             mCurTransaction = mFragmentManager.beginTransaction();
         }
-        if (DEBUG) Log.v(TAG, "Removing item #");
+        if (DEBUG) Log.v("test", "Removing item #");
         int tagId = genTagId(holder.getAdapterPosition());
         Fragment f = mFragmentManager.findFragmentByTag(tagId + "");
         if (f != null) {
-            if (DEBUG) Log.v(TAG, "Removing fragment #");
+            if (DEBUG) Log.v("test", "Removing fragment #");
             mStates.put(tagId, mFragmentManager.saveFragmentInstanceState(f));
             mCurTransaction.remove(f);
             mCurTransaction.commitAllowingStateLoss();
@@ -141,6 +141,7 @@ public abstract class FragmentStatePagerAdapter extends RecyclerView.Adapter<Fra
                 mCurTransaction = mFragmentManager.beginTransaction();
             }
             final int tagId = genTagId(getLayoutPosition());
+            System.out.println("tagId:" + tagId);
             final Fragment fragmentInAdapter = getItem(getLayoutPosition(), mStates.get(tagId));
             if (fragmentInAdapter != null) {
                 mCurTransaction.replace(itemView.getId(), fragmentInAdapter, tagId + "");
@@ -152,7 +153,7 @@ public abstract class FragmentStatePagerAdapter extends RecyclerView.Adapter<Fra
 
         @Override
         public void onViewDetachedFromWindow(View v) {
-            if (DEBUG) Log.v(TAG, "Removing fragment #");
+            if (DEBUG) Log.v("test", "Removing fragment #");
             final int tagId = genTagId(getLayoutPosition());
             Fragment frag = mFragmentManager.findFragmentByTag(tagId + "");
             if (frag == null) {

@@ -6,11 +6,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
-import com.viewpagerindicator.as.CirclePageIndicator;
-import com.viewpagerindicator.as.sample.recycler.CheeseListFragment;
-import com.viewpagerindicator.as.sample.recycler.FragmentStatePagerAdapter;
-import com.viewpagerindicator.as.sample.recycler.RecyclerViewPager;
-import com.viewpagerindicator.as.sample.recycler.TabLayoutSupport;
+import com.viewpagerindicator.as.recycler.CheeseListFragment;
+import com.viewpagerindicator.as.recycler.FragmentStatePagerAdapter;
+import com.viewpagerindicator.as.recycler.RecyclerCirclePageIndicator;
+import com.viewpagerindicator.as.recycler.RecyclerViewPager;
 
 import java.util.LinkedHashMap;
 
@@ -20,7 +19,8 @@ import butterknife.ButterKnife;
 public class SampleCirclesDefaultRecycler extends BaseSampleActivity {
 
     @Bind(R.id.viewpager) RecyclerViewPager pager;
-    @Bind(R.id.indicator) CirclePageIndicator indicator;
+    @Bind(R.id.indicator)
+    RecyclerCirclePageIndicator indicator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,15 +34,24 @@ public class SampleCirclesDefaultRecycler extends BaseSampleActivity {
 //        mPager = (ViewPager)findViewById(R.id.pager);
         pager.setAdapter(adapter);
 
+        pager.setOnScrollListener(new RecyclerCirclePageIndicator.OnScrollListener());
+        pager.addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
+            @Override
+            public void OnPageChanged(int oldPosition, int newPosition) {
+                            getSupportActionBar()
+                    .setTitle("from arguments:" + newPosition);
+            }
+        });
+
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation (LinearLayoutManager.HORIZONTAL);
-        pager.setLayoutManager(new LinearLayoutManager(this));
+        pager.setLayoutManager(manager);
 
 //        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
-        indicator.setViewPager(mPager);
+        indicator.setViewPager(pager);
     }
 
-    class FragmentsAdapter extends FragmentStatePagerAdapter implements TabLayoutSupport.ViewPagerTabLayoutAdapter {
+    class FragmentsAdapter extends FragmentStatePagerAdapter /*implements TabLayoutSupport.ViewPagerTabLayoutAdapter*/ {
         LinkedHashMap<Integer, Fragment> mFragmentCache = new LinkedHashMap<>();
 
         public FragmentsAdapter(FragmentManager fm) {
@@ -60,7 +69,7 @@ public class SampleCirclesDefaultRecycler extends BaseSampleActivity {
                 bundle.putInt("index", position);
                 f.setArguments(bundle);
                 Log.e("test", "setArguments:" + position);
-            } else if (!mFragmentCache.containsKey(position)) {
+            } else if (mFragmentCache.containsKey(position)) {
                 f.setInitialSavedState(savedState);
                 Log.e("test", "setInitialSavedState:" + position);
             }
@@ -77,11 +86,11 @@ public class SampleCirclesDefaultRecycler extends BaseSampleActivity {
             }
         }
 
-        @Override
-        public String getPageTitle(int position) {
-            return "item-" + position;
-        }
-
+//        @Override
+//        public String getPageTitle(int position) {
+//            return "item-" + position;
+//        }
+//
         @Override
         public int getItemCount() {
             return 10;

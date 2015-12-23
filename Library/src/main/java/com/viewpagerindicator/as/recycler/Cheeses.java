@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.viewpagerindicator.as.sample.recycler;
+package com.viewpagerindicator.as.recycler;
 
-import com.viewpagerindicator.as.sample.R;
+
+import com.viewpagerindicator.as.R;
 
 import java.util.Random;
 

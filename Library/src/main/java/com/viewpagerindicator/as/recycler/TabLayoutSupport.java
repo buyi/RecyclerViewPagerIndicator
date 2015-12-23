@@ -1,4 +1,4 @@
-package com.viewpagerindicator.as.sample.recycler;
+package com.viewpagerindicator.as.recycler;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;

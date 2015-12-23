@@ -1,4 +1,4 @@
-package com.viewpagerindicator.as.sample.recycler;
+package com.viewpagerindicator.as.recycler;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,8 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.viewpagerindicator.as.sample.BuildConfig;
-import com.viewpagerindicator.as.sample.R;
+import com.viewpagerindicator.as.R;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ import java.util.List;
  * @author Green
  */
 public class RecyclerViewPager extends RecyclerView {
-    public static final boolean DEBUG = BuildConfig.DEBUG;
+    public static final boolean DEBUG = true;//BuildConfig.DEBUG;
 
     private RecyclerViewPagerAdapter<?> mViewPagerAdapter;
     private float mTriggerOffset = 0.25f;
@@ -190,6 +189,11 @@ public class RecyclerViewPager extends RecyclerView {
                     if (mOnPageChangedListeners != null) {
                         for (OnPageChangedListener onPageChangedListener : mOnPageChangedListeners) {
                             if (onPageChangedListener != null) {
+                                Log.d("@", "mPositionBeforeScroll:" + mPositionBeforeScroll);
+                                Log.d("@", "getCurrentPosition:" + getCurrentPosition());
+
+
+
                                 onPageChangedListener.OnPageChanged(mPositionBeforeScroll, getCurrentPosition());
                             }
                         }

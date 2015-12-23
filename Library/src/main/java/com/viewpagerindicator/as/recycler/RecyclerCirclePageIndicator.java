@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.viewpagerindicator.as;
+package com.viewpagerindicator.as.recycler;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -28,10 +28,13 @@ import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+
+import com.viewpagerindicator.as.R;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 import static android.widget.LinearLayout.HORIZONTAL;
@@ -41,14 +44,15 @@ import static android.widget.LinearLayout.VERTICAL;
  * Draws circles (one for each view). The current view position is filled and
  * others are only stroked.
  */
-public class CirclePageIndicator extends View implements PageIndicator {
+public class RecyclerCirclePageIndicator extends View implements RecyclerPageIndicator {
     private static final int INVALID_POINTER = -1;
 
     private float mRadius;
     private final Paint mPaintPageFill = new Paint(ANTI_ALIAS_FLAG);
     private final Paint mPaintStroke = new Paint(ANTI_ALIAS_FLAG);
     private final Paint mPaintFill = new Paint(ANTI_ALIAS_FLAG);
-    private ViewPager mViewPager;
+//    private ViewPager mViewPager;
+    private RecyclerView mRecyclerView;
     private ViewPager.OnPageChangeListener mListener;
     private int mCurrentPage;
     private int mSnapPage;
@@ -64,15 +68,15 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private boolean mIsDragging;
 
 
-    public CirclePageIndicator(Context context) {
+    public RecyclerCirclePageIndicator(Context context) {
         this(context, null);
     }
 
-    public CirclePageIndicator(Context context, AttributeSet attrs) {
+    public RecyclerCirclePageIndicator(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.vpiCirclePageIndicatorStyle);
     }
 
-    public CirclePageIndicator(Context context, AttributeSet attrs, int defStyle) {
+    public RecyclerCirclePageIndicator(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         if (isInEditMode()) return;
 
@@ -198,10 +202,10 @@ public class CirclePageIndicator extends View implements PageIndicator {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (mViewPager == null) {
+        if (mRecyclerView == null) {
             return;
         }
-        final int count = mViewPager.getAdapter().getCount();
+        final int count = mRecyclerView.getAdapter().getItemCount();
         if (count == 0) {
             return;
         }
@@ -263,8 +267,13 @@ public class CirclePageIndicator extends View implements PageIndicator {
             }
         }
 
+
+
         //Draw the filled circle according to the current scroll
         float cx = (mSnap ? mSnapPage : mCurrentPage) * threeRadius;
+        System.out.println("cx:" + cx);
+        System.out.println("mCurrentPage:" + mCurrentPage);
+        System.out.println("mSnap:" + mSnap);
         if (!mSnap) {
             cx += mPageOffset * threeRadius;
         }
@@ -282,7 +291,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         if (super.onTouchEvent(ev)) {
             return true;
         }
-        if ((mViewPager == null) || (mViewPager.getAdapter().getCount() == 0)) {
+        if ((mRecyclerView == null) || (mRecyclerView.getAdapter().getItemCount() == 0)) {
             return false;
         }
 
@@ -306,9 +315,9 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
                 if (mIsDragging) {
                     mLastMotionX = x;
-                    if (mViewPager.isFakeDragging() || mViewPager.beginFakeDrag()) {
-                        mViewPager.fakeDragBy(deltaX);
-                    }
+//                    if (mRecyclerView.isFakeDragging() || mViewPager.beginFakeDrag()) {
+//                        mViewPager.fakeDragBy(deltaX);
+//                    }
                 }
 
                 break;
@@ -317,19 +326,21 @@ public class CirclePageIndicator extends View implements PageIndicator {
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
                 if (!mIsDragging) {
-                    final int count = mViewPager.getAdapter().getCount();
+                    final int count = mRecyclerView.getAdapter().getItemCount();
                     final int width = getWidth();
                     final float halfWidth = width / 2f;
                     final float sixthWidth = width / 6f;
 
                     if ((mCurrentPage > 0) && (ev.getX() < halfWidth - sixthWidth)) {
                         if (action != MotionEvent.ACTION_CANCEL) {
-                            mViewPager.setCurrentItem(mCurrentPage - 1);
+                            mRecyclerView.scrollToPosition (mCurrentPage - 1);
+//                            mViewPager.setCurrentItem(mCurrentPage - 1);
                         }
                         return true;
                     } else if ((mCurrentPage < count - 1) && (ev.getX() > halfWidth + sixthWidth)) {
                         if (action != MotionEvent.ACTION_CANCEL) {
-                            mViewPager.setCurrentItem(mCurrentPage + 1);
+                            mRecyclerView.scrollToPosition (mCurrentPage + 1);
+//                            mViewPager.setCurrentItem(mCurrentPage + 1);
                         }
                         return true;
                     }
@@ -337,7 +348,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
                 mIsDragging = false;
                 mActivePointerId = INVALID_POINTER;
-                if (mViewPager.isFakeDragging()) mViewPager.endFakeDrag();
+//                if (mViewPager.isFakeDragging()) mViewPager.endFakeDrag();
                 break;
 
             case MotionEventCompat.ACTION_POINTER_DOWN: {
@@ -362,33 +373,83 @@ public class CirclePageIndicator extends View implements PageIndicator {
     }
 
     @Override
-    public void setViewPager(ViewPager view) {
-        if (mViewPager == view) {
+    public void setViewPager(RecyclerView view) {
+        if (mRecyclerView == view) {
             return;
         }
-        if (mViewPager != null) {
-            mViewPager.setOnPageChangeListener(null);
-        }
+//        if (mViewPager != null) {
+//            mViewPager.setOnPageChangeListener(null);
+//        }
         if (view.getAdapter() == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
-        mViewPager = view;
-        mViewPager.setOnPageChangeListener(this);
+        mRecyclerView = view;
+        ((RecyclerViewPager)mRecyclerView).addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
+            @Override
+            public void OnPageChanged(int oldPosition, int newPosition) {
+//                if (mSnap || mScrollState == RecyclerView.SCROLL_STATE_SETTLING) {
+                    mCurrentPage  = newPosition;
+                    mSnapPage  = newPosition;
+                    invalidate();
+//                }
+
+                if (mListener != null) {
+                    mListener.onPageSelected(newPosition);
+                }
+            }
+        });
+
+
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                mScrollState = newState;
+
+                if (mListener != null) {
+                    mListener.onPageScrollStateChanged(newState);
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+//                mCurrentPage = position;
+//                mPageOffset = dx;
+//                invalidate();
+
+//                if (mListener != null) {
+//                    mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+//                }
+            }
+        });
+//        mViewPager.setOnPageChangeListener(this);
         invalidate();
     }
 
     @Override
-    public void setViewPager(ViewPager view, int initialPosition) {
+    public void setViewPager(RecyclerView view, int initialPosition) {
         setViewPager(view);
         setCurrentItem(initialPosition);
     }
 
+//    @Override
+//    public void setViewPager(RecyclerView view) {
+//
+//    }
+
+//    @Override
+//    public void setViewPager(RecyclerView view, int initialPosition) {
+//
+//    }
+
     @Override
     public void setCurrentItem(int item) {
-        if (mViewPager == null) {
+        if (mRecyclerView == null) {
             throw new IllegalStateException("ViewPager has not been bound.");
         }
-        mViewPager.setCurrentItem(item);
+        mRecyclerView.scrollToPosition(item);
+//        mViewPager.setCurrentItem(item);
         mCurrentPage = item;
         invalidate();
     }
@@ -398,43 +459,43 @@ public class CirclePageIndicator extends View implements PageIndicator {
         invalidate();
     }
 
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        mScrollState = state;
+//    @Override
+//    public void onPageScrollStateChanged(int state) {
+//        mScrollState = state;
+//
+//        if (mListener != null) {
+//            mListener.onPageScrollStateChanged(state);
+//        }
+//    }
 
-        if (mListener != null) {
-            mListener.onPageScrollStateChanged(state);
-        }
-    }
+//    @Override
+//    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//        mCurrentPage = position;
+//        mPageOffset = positionOffset;
+//        invalidate();
+//
+//        if (mListener != null) {
+//            mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+//        }
+//    }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        mCurrentPage = position;
-        mPageOffset = positionOffset;
-        invalidate();
+//    @Override
+//    public void onPageSelected(int position) {
+//        if (mSnap || mScrollState == ViewPager.SCROLL_STATE_IDLE) {
+//            mCurrentPage = position;
+//            mSnapPage = position;
+//            invalidate();
+//        }
+//
+//        if (mListener != null) {
+//            mListener.onPageSelected(position);
+//        }
+//    }
 
-        if (mListener != null) {
-            mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
-        }
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        if (mSnap || mScrollState == ViewPager.SCROLL_STATE_IDLE) {
-            mCurrentPage = position;
-            mSnapPage = position;
-            invalidate();
-        }
-
-        if (mListener != null) {
-            mListener.onPageSelected(position);
-        }
-    }
-
-    @Override
-    public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
-        mListener = listener;
-    }
+//    @Override
+//    public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
+//        mListener = listener;
+//    }
 
     /*
      * (non-Javadoc)
@@ -462,12 +523,12 @@ public class CirclePageIndicator extends View implements PageIndicator {
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
 
-        if ((specMode == MeasureSpec.EXACTLY) || (mViewPager == null)) {
+        if ((specMode == MeasureSpec.EXACTLY) || (mRecyclerView == null)) {
             //We were told how big to be
             result = specSize;
         } else {
             //Calculate the width according the views count
-            final int count = mViewPager.getAdapter().getCount();
+            final int count = mRecyclerView.getAdapter().getItemCount();
             result = (int)(getPaddingLeft() + getPaddingRight()
                     + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
             //Respect AT_MOST value if that was what is called for by measureSpec
@@ -476,6 +537,26 @@ public class CirclePageIndicator extends View implements PageIndicator {
             }
         }
         return result;
+    }
+
+    public static class OnScrollListener extends  RecyclerView.OnScrollListener {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            System.out.println("newState:" + newState);
+            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+//            layoutManager.get
+//            int count = layoutManager.getgetColumnCountForAccessibility(recyclerView, new RecyclerView.State());
+//            layoutManager.get
+//            System.out.println("recyclerView:" + recyclerView.get);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            System.out.println("dy:" + dy);
+            System.out.println("dx:" + dx);
+        }
     }
 
     /**

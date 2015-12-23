@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.viewpagerindicator.as.sample.recycler;
+package com.viewpagerindicator.as.recycler;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -33,7 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.viewpagerindicator.as.sample.R;
+import com.viewpagerindicator.as.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,14 +49,22 @@ public class CheeseListFragment extends Fragment {
         setupRecyclerView(rv);
         if (savedInstanceState == null) {
             mIndex = getArguments().getInt("index");
-            ((AppCompatActivity) getActivity()).getSupportActionBar()
-                    .setTitle("from arguments:" + mIndex);
+            System.out.println("onCreateView is null mIndex:" + mIndex);
+//            ((AppCompatActivity) getActivity()).getSupportActionBar()
+//                    .setTitle("from arguments:" + mIndex);
         } else {
             mIndex = savedInstanceState.getInt("index");
-            ((AppCompatActivity) getActivity()).getSupportActionBar()
-                    .setTitle("from savedInstanceState:" + mIndex);
+            System.out.println("onCreateView is not null mIndex:" + mIndex);
+//            ((AppCompatActivity) getActivity()).getSupportActionBar()
+//                    .setTitle("from savedInstanceState:" + mIndex);
         }
         return rv;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        System.out.println("onResume mIndex:" + mIndex);
     }
 
     @Override

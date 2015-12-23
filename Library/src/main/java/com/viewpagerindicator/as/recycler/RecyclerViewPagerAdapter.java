@@ -1,4 +1,4 @@
-package com.viewpagerindicator.as.sample.recycler;
+package com.viewpagerindicator.as.recycler;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
