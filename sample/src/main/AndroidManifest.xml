@@ -30,7 +30,7 @@
         </activity>
 
         <activity
-            android:name=".SampleCirclesDefaultRecycler"
+            android:name=".recycler.SampleCirclesDefaultRecycler"
             android:label="Circles/DefaultRecycler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,6 +46,17 @@
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".recycler.SampleCirclesInitialPageRecycler"
+            android:label="Circles/InitialPageRecycler">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+
+
         <activity
             android:name=".SampleCirclesSnap"
             android:label="Circles/Snap">
@@ -54,6 +65,17 @@
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".recycler.SampleCirclesSnapRecycler"
+            android:label="Circles/SnapRecycler">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+
+
         <activity
             android:name=".SampleCirclesStyledLayout"
             android:label="Circles/Styled (via layout)"

@@ -128,6 +128,8 @@ public abstract class FragmentStatePagerAdapter extends RecyclerView.Adapter<Fra
 
     public abstract void onDestroyItem(int position, Fragment fragment);
 
+
+    // 自定义view 装载fragment
     public class FragmentViewHolder extends RecyclerView.ViewHolder implements View.OnAttachStateChangeListener {
 
         public FragmentViewHolder(View itemView) {
@@ -141,7 +143,8 @@ public abstract class FragmentStatePagerAdapter extends RecyclerView.Adapter<Fra
                 mCurTransaction = mFragmentManager.beginTransaction();
             }
             final int tagId = genTagId(getLayoutPosition());
-            System.out.println("tagId:" + tagId);
+            System.out.println("onViewAttachedToWindow layoutposition:" + getLayoutPosition());
+            System.out.println("onViewAttachedToWindow tagId:" + tagId);
             final Fragment fragmentInAdapter = getItem(getLayoutPosition(), mStates.get(tagId));
             if (fragmentInAdapter != null) {
                 mCurTransaction.replace(itemView.getId(), fragmentInAdapter, tagId + "");
