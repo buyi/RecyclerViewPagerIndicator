@@ -1,4 +1,4 @@
-package com.viewpagerindicator.as.recycler;
+package com.viewpagerindicator.as.recycler.pageview;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

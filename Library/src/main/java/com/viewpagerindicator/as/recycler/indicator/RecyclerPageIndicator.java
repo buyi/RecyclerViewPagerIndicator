@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.viewpagerindicator.as.recycler;
+package com.viewpagerindicator.as.recycler.indicator;
 
 import android.support.v7.widget.RecyclerView;
 

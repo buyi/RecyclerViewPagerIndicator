@@ -3,8 +3,8 @@ package com.viewpagerindicator.as.sample.recycler;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
-import com.viewpagerindicator.as.recycler.RecyclerCirclePageIndicator;
-import com.viewpagerindicator.as.recycler.RecyclerViewPager;
+import com.viewpagerindicator.as.recycler.indicator.RecyclerCirclePageIndicator;
+import com.viewpagerindicator.as.recycler.pageview.RecyclerViewPager;
 import com.viewpagerindicator.as.sample.R;
 
 import butterknife.Bind;

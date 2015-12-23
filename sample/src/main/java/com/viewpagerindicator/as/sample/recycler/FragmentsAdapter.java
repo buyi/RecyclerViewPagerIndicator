@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
-import com.viewpagerindicator.as.recycler.CheeseListFragment;
-import com.viewpagerindicator.as.recycler.FragmentStatePagerAdapter;
+import com.viewpagerindicator.as.recycler.pageview.CheeseListFragment;
+import com.viewpagerindicator.as.recycler.pageview.FragmentStatePagerAdapter;
 
 import java.util.LinkedHashMap;
 
@@ -31,7 +31,7 @@ class FragmentsAdapter extends FragmentStatePagerAdapter /*implements TabLayoutS
             bundle.putInt("index", position);
             f.setArguments(bundle);
             Log.e("test", "setArguments:" + position);
-        } else if (mFragmentCache.containsKey(position)) {
+        } else if (!mFragmentCache.containsKey(position)) {
             f.setInitialSavedState(savedState);
             Log.e("test", "setInitialSavedState:" + position);
         }

@@ -124,6 +124,15 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".recycler.SampleIconsDefaultRecycler"
+            android:label="Icons/DefaultRecycler">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+
 
 
 
@@ -136,6 +145,17 @@
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".recycler.SampleLinesDefaultRecycler"
+            android:label="Lines/DefaultRecycler">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+
+
         <activity
             android:name=".SampleLinesStyledLayout"
             android:label="Lines/Styled (via layout)"
@@ -186,6 +206,16 @@
         <activity
             android:name=".SampleTitlesDefault"
             android:label="Titles/Default">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".recycler.SampleTitlesDefaultRecycler"
+            android:label="Titles/DefaultRecycler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
@@ -255,6 +285,18 @@
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".recycler.SampleTabsDefaultRecycler"
+            android:label="Tabs/DefaultRecycler"
+            android:theme="@style/Theme.PageIndicatorDefaults">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+
+
         <activity
             android:name=".SampleTabsStyled"
             android:label="Tabs/Styled"
@@ -285,6 +327,17 @@
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".recycler.SampleUnderlinesDefaultRecycler"
+            android:label="Underlines/DefaultRecycler">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+
+
         <activity
             android:name=".SampleUnderlinesNoFade"
             android:label="Underlines/No Fade">

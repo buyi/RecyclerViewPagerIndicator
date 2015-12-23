@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.viewpagerindicator.as.recycler;
+package com.viewpagerindicator.as.recycler.pageview;
 
 
 import com.viewpagerindicator.as.R;
