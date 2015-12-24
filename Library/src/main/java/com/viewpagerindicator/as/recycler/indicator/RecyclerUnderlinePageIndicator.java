@@ -19,13 +19,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewConfigurationCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -50,10 +50,9 @@ public class RecyclerUnderlinePageIndicator extends View implements RecyclerPage
     private int mFadeLength;
     private int mFadeBy;
 
-//    private ViewPager mViewPager;
+
     private RecyclerView mRecyclerView;
-//    private ViewPager.OnPageChangeListener mListener;
-    private int mScrollState;
+    private ViewPager.OnPageChangeListener mListener;
     private int mCurrentPage;
     private float mPositionOffset;
 
@@ -61,6 +60,8 @@ public class RecyclerUnderlinePageIndicator extends View implements RecyclerPage
     private float mLastMotionX = -1;
     private int mActivePointerId = INVALID_POINTER;
     private boolean mIsDragging;
+
+    private int defaultSelectedColor;
 
     private final Runnable mFadeRunnable = new Runnable() {
       @Override public void run() {
@@ -93,7 +94,7 @@ public class RecyclerUnderlinePageIndicator extends View implements RecyclerPage
         final boolean defaultFades = res.getBoolean(R.bool.default_underline_indicator_fades);
         final int defaultFadeDelay = res.getInteger(R.integer.default_underline_indicator_fade_delay);
         final int defaultFadeLength = res.getInteger(R.integer.default_underline_indicator_fade_length);
-        final int defaultSelectedColor = res.getColor(R.color.default_underline_indicator_selected_color);
+        defaultSelectedColor = res.getColor(R.color.default_underline_indicator_selected_color);
 
         //Retrieve styles attributes
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.UnderlinePageIndicator, defStyle, 0);
@@ -180,7 +181,7 @@ public class RecyclerUnderlinePageIndicator extends View implements RecyclerPage
         final float right = left + pageWidth;
         final float top = getPaddingTop();
         final float bottom = getHeight() - getPaddingBottom();
-        mPaint.setColor(Color.parseColor("#000000"));
+        mPaint.setColor(defaultSelectedColor);
         canvas.drawRect(left, top, right, bottom, mPaint);
     }
 
@@ -212,9 +213,6 @@ public class RecyclerUnderlinePageIndicator extends View implements RecyclerPage
 
                 if (mIsDragging) {
                     mLastMotionX = x;
-//                    if (mViewPager.isFakeDragging() || mViewPager.beginFakeDrag()) {
-//                        mViewPager.fakeDragBy(deltaX);
-//                    }
                 }
 
                 break;
@@ -231,13 +229,11 @@ public class RecyclerUnderlinePageIndicator extends View implements RecyclerPage
                     if ((mCurrentPage > 0) && (ev.getX() < halfWidth - sixthWidth)) {
                         if (action != MotionEvent.ACTION_CANCEL) {
                             mRecyclerView.scrollToPosition(mCurrentPage - 1);
-//                            mViewPager.setCurrentItem(mCurrentPage - 1);
                         }
                         return true;
                     } else if ((mCurrentPage < count - 1) && (ev.getX() > halfWidth + sixthWidth)) {
                         if (action != MotionEvent.ACTION_CANCEL) {
                             mRecyclerView.scrollToPosition(mCurrentPage + 1);
-//                            mViewPager.setCurrentItem(mCurrentPage + 1);
                         }
                         return true;
                     }
@@ -245,7 +241,6 @@ public class RecyclerUnderlinePageIndicator extends View implements RecyclerPage
 
                 mIsDragging = false;
                 mActivePointerId = INVALID_POINTER;
-//                if (mViewPager.isFakeDragging()) mViewPager.endFakeDrag();
                 break;
 
             case MotionEventCompat.ACTION_POINTER_DOWN: {
@@ -293,11 +288,6 @@ public class RecyclerUnderlinePageIndicator extends View implements RecyclerPage
 //        });
 //    }
 
-//    @Override
-//    public void setViewPager(ViewPager view, int initialPosition) {
-//
-//    }
-
     @Override
     public void setViewPager(RecyclerView view) {
         {
@@ -306,20 +296,21 @@ public class RecyclerUnderlinePageIndicator extends View implements RecyclerPage
             }
             if (mRecyclerView != null) {
                 //Clear us from the old pager.
-                ((RecyclerViewPager)mRecyclerView).addOnPageChangedListener(null);
-            }
-            mRecyclerView = view;
-            if (mRecyclerView.getAdapter() == null) {
-                throw new IllegalStateException("ViewPager does not have adapter instance.");
+                wrapViewPager(mRecyclerView).clearOnPageChangedListeners();
             }
 
-            ((RecyclerViewPager)mRecyclerView).addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
+            if (view.getAdapter() == null) {
+                throw new IllegalStateException("ViewPager does not have adapter instance.");
+            }
+            mRecyclerView = view;
+
+            wrapViewPager(mRecyclerView).addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
                 @Override
                 public void OnPageChanged(int oldPosition, int newPosition) {
                     mCurrentPage = newPosition;
-            mPositionOffset = 0;
-            invalidate();
-            mFadeRunnable.run();
+                    mPositionOffset = 0;
+                    invalidate();
+                    mFadeRunnable.run();
                     notifyDataSetChanged();
                 }
             });
@@ -346,7 +337,6 @@ public class RecyclerUnderlinePageIndicator extends View implements RecyclerPage
         if (mRecyclerView == null) {
             throw new IllegalStateException("ViewPager has not been bound.");
         }
-//        mViewPager.setCurrentItem(item);
         mRecyclerView.scrollToPosition(item);
         mCurrentPage = item;
         invalidate();
@@ -449,5 +439,12 @@ public class RecyclerUnderlinePageIndicator extends View implements RecyclerPage
                 return new SavedState[size];
             }
         };
+    }
+
+    private RecyclerViewPager wrapViewPager ( RecyclerView view) {
+        if (view  instanceof  RecyclerViewPager) {
+            return (RecyclerViewPager) view;
+        }
+        throw  new IllegalArgumentException("this view is not RecyclerViewPager type");
     }
 }

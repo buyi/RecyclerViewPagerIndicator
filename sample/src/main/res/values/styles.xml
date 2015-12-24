@@ -90,9 +90,10 @@
         <item name="android:typeface">monospace</item>
     </style>
 
-    <style name="CustomUnderlinePageIndicator">
-        <item name="selectedColor">#FFCC0000</item>
-        <item name="android:background">#FFCCCCCC</item>
+    <!-- CustomUnderlinePageIndicator's style-->
+    <style name="CustomUnderlinePageIndicator" parent="Theme.AppCompat">
+        <item name="selectedColor">#FF0ff000</item>
+        <item name="android:background">#FF00FFFF</item>
         <item name="fadeLength">1000</item>
         <item name="fadeDelay">1000</item>
     </style>
