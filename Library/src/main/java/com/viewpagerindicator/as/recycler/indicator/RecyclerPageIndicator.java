@@ -20,19 +20,19 @@ package com.viewpagerindicator.as.recycler.indicator;
 import android.support.v7.widget.RecyclerView;
 
 /**
- * A PageIndicator is responsible to show an visual indicator on the total views
+ * A RecyclerPageIndicator is responsible to show an visual indicator on the total views
  * number and the current visible view.
  */
 public interface RecyclerPageIndicator /*extends ViewPager.OnPageChangeListener*/ {
     /**
-     * Bind the indicator to a ViewPager.
+     * Bind the indicator to a RecyclerView.
      *
      * @param view
      */
     void setViewPager(RecyclerView view);
 
     /**
-     * Bind the indicator to a ViewPager.
+     * Bind the indicator to a RecyclerView.
      *
      * @param view
      * @param initialPosition

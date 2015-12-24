@@ -11,7 +11,7 @@
         <activity
             android:name=".ListSamples"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/StyledIndicators" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,17 +20,10 @@
         </activity>
 
         <!-- CIRCLE INDICATOR -->
-        <activity
-            android:name=".SampleCirclesDefault"
-            android:label="Circles/Default">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
-            </intent-filter>
-        </activity>
 
         <activity
             android:name=".recycler.SampleCirclesDefaultRecycler"
+            android:theme="@style/StyledIndicators"
             android:label="Circles/DefaultRecycler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,74 +31,10 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".SampleCirclesInitialPage"
-            android:label="Circles/Initial Page">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
-            </intent-filter>
-        </activity>
 
         <activity
             android:name=".recycler.SampleCirclesInitialPageRecycler"
             android:label="Circles/InitialPageRecycler">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
-            </intent-filter>
-        </activity>
-
-
-        <activity
-            android:name=".SampleCirclesSnap"
-            android:label="Circles/Snap">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".recycler.SampleCirclesSnapRecycler"
-            android:label="Circles/SnapRecycler">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
-            </intent-filter>
-        </activity>
-
-
-        <activity
-            android:name=".SampleCirclesStyledLayout"
-            android:label="Circles/Styled (via layout)"
-            android:theme="@android:style/Theme.Light">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".SampleCirclesStyledMethods"
-            android:label="Circles/Styled (via methods)"
-            android:theme="@android:style/Theme.Light">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".SampleCirclesStyledTheme"
-            android:label="Circles/Styled (via theme)"
-            android:theme="@style/StyledIndicators">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".SampleCirclesWithListener"
-            android:label="Circles/With Listener">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
@@ -148,6 +77,7 @@
 
         <activity
             android:name=".recycler.SampleLinesDefaultRecycler"
+            android:theme="@style/CustomLinePageIndicator"
             android:label="Lines/DefaultRecycler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -32,7 +32,6 @@
     <com.viewpagerindicator.as.recycler.indicator.RecyclerCirclePageIndicator
         android:id="@+id/indicator"
         android:layout_width="fill_parent"
-        android:background="#00ff00"
         android:layout_height="wrap_content"
         android:padding="10dip" />
 </LinearLayout>

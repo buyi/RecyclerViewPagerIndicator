@@ -44,7 +44,6 @@ public class RecyclerLinePageIndicator extends View implements RecyclerPageIndic
 
     private final Paint mPaintUnselected = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint mPaintSelected = new Paint(Paint.ANTI_ALIAS_FLAG);
-//    private ViewPager mViewPager;
     private RecyclerView mRecyclerView;
     private ViewPager.OnPageChangeListener mListener;
     private int mCurrentPage;
@@ -222,9 +221,6 @@ public class RecyclerLinePageIndicator extends View implements RecyclerPageIndic
 
                 if (mIsDragging) {
                     mLastMotionX = x;
-//                    if (mViewPager.isFakeDragging() || mViewPager.beginFakeDrag()) {
-//                        mViewPager.fakeDragBy(deltaX);
-//                    }
                 }
 
                 break;
@@ -241,13 +237,11 @@ public class RecyclerLinePageIndicator extends View implements RecyclerPageIndic
                     if ((mCurrentPage > 0) && (ev.getX() < halfWidth - sixthWidth)) {
                         if (action != MotionEvent.ACTION_CANCEL) {
                             mRecyclerView.scrollToPosition(mCurrentPage - 1);
-//                            mViewPager.setCurrentItem(mCurrentPage - 1);
                         }
                         return true;
                     } else if ((mCurrentPage < count - 1) && (ev.getX() > halfWidth + sixthWidth)) {
                         if (action != MotionEvent.ACTION_CANCEL) {
                             mRecyclerView.scrollToPosition(mCurrentPage + 1);
-//                            mViewPager.setCurrentItem(mCurrentPage + 1);
                         }
                         return true;
                     }
@@ -255,7 +249,6 @@ public class RecyclerLinePageIndicator extends View implements RecyclerPageIndic
 
                 mIsDragging = false;
                 mActivePointerId = INVALID_POINTER;
-//                if (mViewPager.isFakeDragging()) mViewPager.endFakeDrag();
                 break;
 
             case MotionEventCompat.ACTION_POINTER_DOWN: {
@@ -279,28 +272,6 @@ public class RecyclerLinePageIndicator extends View implements RecyclerPageIndic
         return true;
     }
 
-//    @Override
-//    public void setViewPager(ViewPager viewPager) {
-//        if (mViewPager == viewPager) {
-//            return;
-//        }
-//        if (mViewPager != null) {
-//            //Clear us from the old pager.
-//            mViewPager.setOnPageChangeListener(null);
-//        }
-//        if (viewPager.getAdapter() == null) {
-//            throw new IllegalStateException("ViewPager does not have adapter instance.");
-//        }
-//        mViewPager = viewPager;
-//        mViewPager.setOnPageChangeListener(this);
-//        invalidate();
-//    }
-
-//    @Override
-//    public void setViewPager(ViewPager view, int initialPosition) {
-//
-//    }
-
     @Override
     public void setViewPager(RecyclerView view) {
         if (mRecyclerView == view) {
@@ -308,21 +279,45 @@ public class RecyclerLinePageIndicator extends View implements RecyclerPageIndic
         }
         if (mRecyclerView != null) {
             //Clear us from the old pager.
-            ((RecyclerViewPager)mRecyclerView).addOnPageChangedListener(null);
+            wrapViewPager(mRecyclerView).addOnPageChangedListener(null);
         }
-        mRecyclerView = view;
-        if (mRecyclerView.getAdapter() == null) {
+
+        if (view.getAdapter() == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
 
-        ((RecyclerViewPager)mRecyclerView).addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
+        mRecyclerView = view;
+
+        wrapViewPager(mRecyclerView).addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
+           @Override
+           public void OnPageChanged(int oldPosition, int newPosition) {
+               mCurrentPage = newPosition;
+               invalidate();
+
+               if (mListener != null) {
+                   mListener.onPageSelected(newPosition);
+               }
+
+           }
+        });
+        wrapViewPager(mRecyclerView).addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void OnPageChanged(int oldPosition, int newPosition) {
-mCurrentPage = newPosition;
-                invalidate();;
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (mListener != null) {
+                    mListener.onPageScrollStateChanged(newState);
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (mListener != null) {
+                    mListener.onPageScrolled(wrapViewPager(mRecyclerView).getCurrentPosition(), 0f, dx);
+                }
             }
         });
-        //setOnPageChangeListener(this);
         invalidate();
     }
 
@@ -338,7 +333,6 @@ mCurrentPage = newPosition;
             throw new IllegalStateException("ViewPager has not been bound.");
         }
         mRecyclerView.scrollToPosition(item);
-//        mViewPager.setCurrentItem(item);
         mCurrentPage = item;
         invalidate();
     }
@@ -370,11 +364,6 @@ mCurrentPage = newPosition;
 //        if (mListener != null) {
 //            mListener.onPageSelected(position);
 //        }
-//    }
-
-//    @Override
-//    public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
-//        mListener = listener;
 //    }
 
     @Override
@@ -481,5 +470,12 @@ mCurrentPage = newPosition;
                 return new SavedState[size];
             }
         };
+    }
+
+    private RecyclerViewPager wrapViewPager ( RecyclerView view) {
+        if (view  instanceof  RecyclerViewPager) {
+            return (RecyclerViewPager) view;
+        }
+        throw  new IllegalArgumentException("this view is not RecyclerViewPager type");
     }
 }

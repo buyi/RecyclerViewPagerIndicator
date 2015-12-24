@@ -26,20 +26,13 @@ public class SampleCirclesInitialPageRecycler extends BaseSampleActivity {
         ButterKnife.bind(this);
 
         FragmentsAdapter adapter = new FragmentsAdapter(getSupportFragmentManager());
-
-//        mAdapter = new com.viewpagerindicator.as.sample.TestFragmentAdapter(getSupportFragmentManager());
-
-//        mPager = (ViewPager)findViewById(R.id.pager);
         pager.setAdapter(adapter);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation (LinearLayoutManager.HORIZONTAL);
         pager.setLayoutManager(manager);
 
-//        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
         indicator.setViewPager(pager);
         pager.scrollToPosition(pager.getLayoutManager().getItemCount() - 1);
-
-        //You can also do: indicator.setViewPager(pager, initialPage);
     }
 }

@@ -1113,10 +1113,12 @@ public class RecyclerViewPagerAdapter<VH extends RecyclerView.ViewHolder> extend
         mAdapter.setHasStableIds(hasStableIds);
     }
 
+
     @Override
     public int getItemCount() {
         return mAdapter.getItemCount();
     }
+
 
     @Override
     public int getItemViewType(int position) {

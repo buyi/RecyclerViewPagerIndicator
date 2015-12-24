@@ -34,16 +34,22 @@
     -->
 
 
-
-
-
-
-    <style name="StyledIndicators" parent="@android:style/Theme.Light">
+    <style name="StyledIndicators" parent="Theme.AppCompat">
+        <!-- reference 指向不同的style  -->
         <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
         <item name="vpiLinePageIndicatorStyle">@style/CustomLinePageIndicator</item>
         <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
         <item name="vpiUnderlinePageIndicatorStyle">@style/CustomUnderlinePageIndicator</item>
+    </style>
+
+    <!-- CirclePageIndicator's style-->
+    <style name="CustomCirclePageIndicator">
+        <item name="fillColor">#FFFF00</item>
+        <item name="strokeColor">#FF0000DD</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="radius">10dp</item>
+        <item name="centered">true</item>
     </style>
 
     <style name="CustomTitlePageIndicator">
@@ -57,22 +63,13 @@
         <item name="selectedBold">true</item>
     </style>
 
-    <style name="CustomLinePageIndicator">
+    <!-- LinePageIndicator's style -->
+    <style name="CustomLinePageIndicator"  parent="Theme.AppCompat">
         <item name="strokeWidth">4dp</item>
         <item name="lineWidth">30dp</item>
         <item name="unselectedColor">#FF888888</item>
         <item name="selectedColor">#FF880000</item>
     </style>
-
-    <style name="CustomCirclePageIndicator">
-        <item name="fillColor">#FF888888</item>
-        <item name="strokeColor">#FF000000</item>
-        <item name="strokeWidth">2dp</item>
-        <item name="radius">10dp</item>
-        <item name="centered">true</item>
-    </style>
-
-
 
 
     <style name="CustomTabPageIndicator" parent="Widget.TabPageIndicator">

@@ -4,16 +4,25 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import com.viewpagerindicator.as.IconPagerAdapter;
 import com.viewpagerindicator.as.recycler.pageview.CheeseListFragment;
 import com.viewpagerindicator.as.recycler.pageview.FragmentStatePagerAdapter;
+import com.viewpagerindicator.as.sample.R;
 
 import java.util.LinkedHashMap;
 
 /**
  * Created by buyi on 15/12/23.
  */
-class FragmentsAdapter extends FragmentStatePagerAdapter {
+class FragmentsAdapter extends FragmentStatePagerAdapter implements IconPagerAdapter {
     LinkedHashMap<Integer, Fragment> mFragmentCache = new LinkedHashMap<>();
+
+    protected static final int[] ICONS = new int[] {
+            R.drawable.perm_group_calendar,
+            R.drawable.perm_group_camera,
+            R.drawable.perm_group_device_alarms,
+            R.drawable.perm_group_location
+    };
 
     public FragmentsAdapter(FragmentManager fm) {
         super(fm);
@@ -54,6 +63,16 @@ class FragmentsAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getItemCount() {
+        return 10;
+    }
+
+    @Override
+    public int getIconResId(int index) {
+        return ICONS[index % ICONS.length];
+    }
+
+    @Override
+    public int getCount() {
         return 10;
     }
 }

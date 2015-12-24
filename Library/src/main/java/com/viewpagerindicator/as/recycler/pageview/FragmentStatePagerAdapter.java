@@ -143,8 +143,8 @@ public abstract class FragmentStatePagerAdapter extends RecyclerView.Adapter<Fra
                 mCurTransaction = mFragmentManager.beginTransaction();
             }
             final int tagId = genTagId(getLayoutPosition());
-            System.out.println("onViewAttachedToWindow layoutposition:" + getLayoutPosition());
-            System.out.println("onViewAttachedToWindow tagId:" + tagId);
+//            System.out.println("onViewAttachedToWindow layoutposition:" + getLayoutPosition());
+//            System.out.println("onViewAttachedToWindow tagId:" + tagId);
             final Fragment fragmentInAdapter = getItem(getLayoutPosition(), mStates.get(tagId));
             if (fragmentInAdapter != null) {
                 mCurTransaction.replace(itemView.getId(), fragmentInAdapter, tagId + "");
@@ -156,7 +156,7 @@ public abstract class FragmentStatePagerAdapter extends RecyclerView.Adapter<Fra
 
         @Override
         public void onViewDetachedFromWindow(View v) {
-            if (DEBUG) Log.v(TAG, "Removing fragment #");
+            if (DEBUG) Log.v("test", "Removing fragment #");
             final int tagId = genTagId(getLayoutPosition());
             Fragment frag = mFragmentManager.findFragmentByTag(tagId + "");
             if (frag == null) {

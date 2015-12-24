@@ -37,6 +37,6 @@ public class SampleCirclesSnapRecycler extends BaseSampleActivity {
 //        CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
 //        mIndicator = indicator;
         indicator.setViewPager(pager);
-        indicator.setSnap(true);
+//        indicator.setSnap(true);
     }
 }

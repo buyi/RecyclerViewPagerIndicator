@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.viewpagerindicator.as.R;
 
 import java.util.ArrayList;
@@ -137,10 +138,10 @@ public class CheeseListFragment extends Fragment {
                 }
             });
 
-//            Glide.with(holder.mImageView.getContext())
-//                    .load(Cheeses.getRandomCheeseDrawable())
-//                    .fitCenter()
-//                    .into(holder.mImageView);
+            Glide.with(holder.mImageView.getContext())
+                    .load(R.mipmap.ic_launcher)
+                    .fitCenter()
+                    .into(holder.mImageView);
         }
 
         @Override

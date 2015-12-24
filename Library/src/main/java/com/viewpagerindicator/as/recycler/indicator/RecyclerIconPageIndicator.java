@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 
+import com.viewpagerindicator.as.IconPagerAdapter;
 import com.viewpagerindicator.as.R;
 import com.viewpagerindicator.as.recycler.pageview.RecyclerViewPager;
 
@@ -38,7 +39,6 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class RecyclerIconPageIndicator extends HorizontalScrollView implements RecyclerPageIndicator {
     private final IcsLinearLayout mIconsLayout;
 
-//    private ViewPager mViewPager;
     private RecyclerView mViewPager;
     private OnPageChangeListener mListener;
     private Runnable mIconSelector;
@@ -127,56 +127,71 @@ public class RecyclerIconPageIndicator extends HorizontalScrollView implements R
 //        notifyDataSetChanged();
 //    }
 
+
+
     public void notifyDataSetChanged() {
         mIconsLayout.removeAllViews();
-//        IconPagerAdapter iconAdapter = (IconPagerAdapter) mViewPager.getAdapter();
+        IconPagerAdapter iconAdapter = (IconPagerAdapter) mViewPager.getAdapter();
         int count = mViewPager.getAdapter().getItemCount();
         for (int i = 0; i < count; i++) {
             ImageView view = new ImageView(getContext(), null, R.attr.vpiIconPageIndicatorStyle);
-            view.setImageResource(R.mipmap.ic_launcher);
+            view.setImageResource(iconAdapter.getIconResId(i));
             mIconsLayout.addView(view);
         }
         if (mSelectedIndex > count) {
             mSelectedIndex = count - 1;
         }
-//        setCurrentItem(mSelectedIndex);
         requestLayout();
     }
 
-//    @Override
-//    public void setViewPager(ViewPager view, int initialPosition) {
-//        setViewPager(view);
-//        setCurrentItem(initialPosition);
-//    }
+
 
     @Override
     public void setViewPager(RecyclerView view) {
         if (mViewPager == view) {
             return;
         }
-//        if (mViewPager != null) {
-//            mViewPager.setOnPageChangeListener(null);
-//        }
-//        PagerAdapter adapter = view.getAdapter();
-//        if (adapter == null) {
-//            throw new IllegalStateException("ViewPager does not have adapter instance.");
-//        }
+        if (mViewPager != null) {
+            wrapViewPager(mViewPager).clearOnPageChangedListeners();
+        }
+
+        if (view.getAdapter() == null) {
+            throw new IllegalStateException("ViewPager does not have adapter instance.");
+        }
+
         mViewPager = view;
-        ((RecyclerViewPager)mViewPager).addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
+        notifyDataSetChanged();
+        animateIcon(mSelectedIndex);
+        wrapViewPager(mViewPager).addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
             @Override
             public void OnPageChanged(int oldPosition, int newPosition) {
-//                mViewPager.scrollToPosition(newPosition);
-//
                 mSelectedIndex = newPosition;
-                notifyDataSetChanged ();
-                invalidate();;
-//
+                invalidate();
+                animateIcon(newPosition);
+
                 if (mListener != null) {
                     mListener.onPageSelected(newPosition);
                 }
             }
         });
-//        notifyDataSetChanged();
+
+        wrapViewPager(mViewPager).addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (mListener != null) {
+                    mListener.onPageScrollStateChanged(newState);
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (mListener != null) {
+                    mListener.onPageScrolled(wrapViewPager(mViewPager).getCurrentPosition(), 0f, dx);
+                }
+            }
+        });
     }
 
     @Override
@@ -191,13 +206,17 @@ public class RecyclerIconPageIndicator extends HorizontalScrollView implements R
             throw new IllegalStateException("ViewPager has not been bound.");
         }
         mSelectedIndex = item;
-        //mViewPager.setCurrentItem(item);
         mViewPager.scrollToPosition(item);
 
+        animateIcon (item);
+    }
+
+    private void animateIcon (int item) {
         int tabCount = mIconsLayout.getChildCount();
         for (int i = 0; i < tabCount; i++) {
             View child = mIconsLayout.getChildAt(i);
             boolean isSelected = (i == item);
+            System.out.println(i + ", isSelected:" + isSelected);
             child.setSelected(isSelected);
             if (isSelected) {
                 animateToIcon(item);
@@ -205,8 +224,10 @@ public class RecyclerIconPageIndicator extends HorizontalScrollView implements R
         }
     }
 
-//    @Override
-//    public void setOnPageChangeListener(OnPageChangeListener listener) {
-//        mListener = listener;
-//    }
+    private RecyclerViewPager wrapViewPager ( RecyclerView view) {
+        if (view  instanceof  RecyclerViewPager) {
+            return (RecyclerViewPager) view;
+        }
+        throw  new IllegalArgumentException("this view is not RecyclerViewPager type");
+    }
 }

@@ -17,6 +17,7 @@ public class SampleLinesDefaultRecycler extends BaseSampleActivity {
     RecyclerViewPager pager;
     @Bind(R.id.indicator)
     RecyclerLinePageIndicator indicator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,15 +25,12 @@ public class SampleLinesDefaultRecycler extends BaseSampleActivity {
         ButterKnife.bind(this);
 
         FragmentsAdapter adapter = new FragmentsAdapter(getSupportFragmentManager());
-//        mAdapter = new com.viewpagerindicator.as.sample.TestFragmentAdapter(getSupportFragmentManager());
-
-//        mPager = (ViewPager)findViewById(R.id.pager);
         pager.setAdapter(adapter);
+
         LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation (LinearLayoutManager.HORIZONTAL);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         pager.setLayoutManager(manager);
 
-//        mIndicator = (LinePageIndicator)findViewById(R.id.indicator);
         indicator.setViewPager(pager);
     }
 }
