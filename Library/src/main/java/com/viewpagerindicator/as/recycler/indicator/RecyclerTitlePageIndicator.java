@@ -30,6 +30,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewConfigurationCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -117,9 +118,8 @@ public class RecyclerTitlePageIndicator extends View implements RecyclerPageIndi
         }
     }
 
-//    private ViewPager mViewPager;
     private RecyclerView mRecyclerView;
-//    private ViewPager.OnPageChangeListener mListener;
+    private ViewPager.OnPageChangeListener mListener;
     private int mCurrentPage = -1;
     private float mPageOffset;
     private int mScrollState;
@@ -573,9 +573,6 @@ public class RecyclerTitlePageIndicator extends View implements RecyclerPageIndi
 
                 if (mIsDragging) {
                     mLastMotionX = x;
-//                    if (mViewPager.isFakeDragging() || mViewPager.beginFakeDrag()) {
-//                        mViewPager.fakeDragBy(deltaX);
-//                    }
                 }
 
                 break;
@@ -596,7 +593,6 @@ public class RecyclerTitlePageIndicator extends View implements RecyclerPageIndi
                         if (mCurrentPage > 0) {
                             if (action != MotionEvent.ACTION_CANCEL) {
                                 mRecyclerView.scrollToPosition(mCurrentPage -1);
-//                                mViewPager.setCurrentItem(mCurrentPage - 1);
                             }
                             return true;
                         }
@@ -604,7 +600,6 @@ public class RecyclerTitlePageIndicator extends View implements RecyclerPageIndi
                         if (mCurrentPage < count - 1) {
                             if (action != MotionEvent.ACTION_CANCEL) {
                                 mRecyclerView.scrollToPosition(mCurrentPage +1);
-//                                mViewPager.setCurrentItem(mCurrentPage + 1);
                             }
                             return true;
                         }
@@ -618,7 +613,6 @@ public class RecyclerTitlePageIndicator extends View implements RecyclerPageIndi
 
                 mIsDragging = false;
                 mActivePointerId = INVALID_POINTER;
-//                if (mViewPager.isFakeDragging()) mViewPager.endFakeDrag();
                 break;
 
             case MotionEventCompat.ACTION_POINTER_DOWN: {
@@ -752,17 +746,39 @@ public class RecyclerTitlePageIndicator extends View implements RecyclerPageIndi
                 return;
             }
             if (mRecyclerView != null) {
-//                mViewPager.setOnPageChangeListener(null);
+                wrapViewPager(mRecyclerView).clearOnPageChangedListeners();
+                wrapViewPager(mRecyclerView).clearOnScrollListeners();
             }
             if (view.getAdapter() == null) {
                 throw new IllegalStateException("ViewPager does not have adapter instance.");
             }
             mRecyclerView = view;
-            ((RecyclerViewPager)mRecyclerView).addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
+            wrapViewPager(mRecyclerView).addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
                 @Override
                 public void OnPageChanged(int oldPosition, int newPosition) {
                     mCurrentPage = newPosition;
-            invalidate();
+                    invalidate();
+                    if (mListener != null) {
+                        mListener.onPageSelected(newPosition);
+                    }
+                }
+            });
+            wrapViewPager(mRecyclerView).addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+
+                    if (mListener != null) {
+                        mListener.onPageScrollStateChanged(newState);
+                    }
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    if (mListener != null) {
+                        mListener.onPageScrolled(wrapViewPager(mRecyclerView).getCurrentPosition(), 0f, dx);
+                    }
                 }
             });
             invalidate();
@@ -781,7 +797,6 @@ public class RecyclerTitlePageIndicator extends View implements RecyclerPageIndi
             throw new IllegalStateException("ViewPager has not been bound.");
         }
         mRecyclerView.scrollToPosition(item);
-        //.setCurrentItem(item);
         mCurrentPage = item;
         invalidate();
     }
@@ -897,10 +912,21 @@ public class RecyclerTitlePageIndicator extends View implements RecyclerPageIndi
     }
 
     private CharSequence getTitle(int i) {
-        CharSequence title = "wocao";//mRecyclerView.getAdapter().getPageTitle(i);
+        CharSequence title = ((IconPagerAdapter)mRecyclerView.getAdapter()).getPageTitle(i);
         if (title == null) {
             title = EMPTY_TITLE;
         }
         return title;
+    }
+
+    public void setmListener(ViewPager.OnPageChangeListener mListener) {
+        this.mListener = mListener;
+    }
+
+    private RecyclerViewPager wrapViewPager ( RecyclerView view) {
+        if (view  instanceof  RecyclerViewPager) {
+            return (RecyclerViewPager) view;
+        }
+        throw  new IllegalArgumentException("this view is not RecyclerViewPager type");
     }
 }

@@ -297,6 +297,7 @@ public class RecyclerUnderlinePageIndicator extends View implements RecyclerPage
             if (mRecyclerView != null) {
                 //Clear us from the old pager.
                 wrapViewPager(mRecyclerView).clearOnPageChangedListeners();
+                wrapViewPager(mRecyclerView).clearOnScrollListeners();
             }
 
             if (view.getAdapter() == null) {
@@ -312,6 +313,27 @@ public class RecyclerUnderlinePageIndicator extends View implements RecyclerPage
                     invalidate();
                     mFadeRunnable.run();
                     notifyDataSetChanged();
+                    if (mListener != null) {
+                        mListener.onPageSelected(newPosition);
+                    }
+                }
+            });
+            wrapViewPager(mRecyclerView).addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    if (mListener != null) {
+                        mListener.onPageScrollStateChanged(newState);
+                    }
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    if (mListener != null) {
+                        mListener.onPageScrolled(wrapViewPager(mRecyclerView).getCurrentPosition(), 0f, dx);
+                    }
                 }
             });
             invalidate();
@@ -439,6 +461,10 @@ public class RecyclerUnderlinePageIndicator extends View implements RecyclerPage
                 return new SavedState[size];
             }
         };
+    }
+
+    public void setmListener(ViewPager.OnPageChangeListener mListener) {
+        this.mListener = mListener;
     }
 
     private RecyclerViewPager wrapViewPager ( RecyclerView view) {

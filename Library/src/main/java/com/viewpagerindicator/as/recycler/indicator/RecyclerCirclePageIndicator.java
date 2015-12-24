@@ -373,7 +373,8 @@ public class RecyclerCirclePageIndicator extends View implements RecyclerPageInd
             return;
         }
         if (mRecyclerView != null) {
-            wrapViewPager(mRecyclerView).addOnPageChangedListener(null);
+            wrapViewPager(mRecyclerView).clearOnPageChangedListeners();
+            wrapViewPager(mRecyclerView).clearOnScrollListeners();
         }
         if (view.getAdapter() == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
@@ -591,6 +592,10 @@ public class RecyclerCirclePageIndicator extends View implements RecyclerPageInd
                 return new SavedState[size];
             }
         };
+    }
+
+    public void setmListener(ViewPager.OnPageChangeListener mListener) {
+        this.mListener = mListener;
     }
 
     private RecyclerViewPager wrapViewPager ( RecyclerView view) {

@@ -279,7 +279,8 @@ public class RecyclerLinePageIndicator extends View implements RecyclerPageIndic
         }
         if (mRecyclerView != null) {
             //Clear us from the old pager.
-            wrapViewPager(mRecyclerView).addOnPageChangedListener(null);
+            wrapViewPager(mRecyclerView).clearOnPageChangedListeners();;
+            wrapViewPager(mRecyclerView).clearOnScrollListeners();
         }
 
         if (view.getAdapter() == null) {
@@ -470,6 +471,10 @@ public class RecyclerLinePageIndicator extends View implements RecyclerPageIndic
                 return new SavedState[size];
             }
         };
+    }
+
+    public void setmListener(ViewPager.OnPageChangeListener mListener) {
+        this.mListener = mListener;
     }
 
     private RecyclerViewPager wrapViewPager ( RecyclerView view) {

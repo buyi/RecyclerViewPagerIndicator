@@ -1,4 +1,4 @@
-package com.viewpagerindicator.as;
+package com.viewpagerindicator.as.recycler.indicator;
 
 public interface IconPagerAdapter {
     /**
@@ -8,4 +8,6 @@ public interface IconPagerAdapter {
 
     // From PagerAdapter
     int getCount();
+
+    CharSequence getPageTitle (int index);
 }

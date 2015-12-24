@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.viewpagerindicator.as.recycler.indicator.RecyclerTitlePageIndicator;
 import com.viewpagerindicator.as.recycler.pageview.RecyclerViewPager;
-import com.viewpagerindicator.as.sample.BaseSampleActivity;
 import com.viewpagerindicator.as.sample.R;
 
 import butterknife.Bind;

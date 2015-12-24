@@ -25,7 +25,6 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 
-import com.viewpagerindicator.as.IconPagerAdapter;
 import com.viewpagerindicator.as.R;
 import com.viewpagerindicator.as.recycler.pageview.RecyclerViewPager;
 
@@ -39,7 +38,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class RecyclerIconPageIndicator extends HorizontalScrollView implements RecyclerPageIndicator {
     private final IcsLinearLayout mIconsLayout;
 
-    private RecyclerView mViewPager;
+    private RecyclerView mRecyclerView;
     private OnPageChangeListener mListener;
     private Runnable mIconSelector;
     private int mSelectedIndex;
@@ -112,17 +111,17 @@ public class RecyclerIconPageIndicator extends HorizontalScrollView implements R
 
 //    @Override
 //    public void setViewPager(ViewPager view) {
-//        if (mViewPager == view) {
+//        if (mRecyclerView == view) {
 //            return;
 //        }
-//        if (mViewPager != null) {
-//            mViewPager.setOnPageChangeListener(null);
+//        if (mRecyclerView != null) {
+//            mRecyclerView.setOnPageChangeListener(null);
 //        }
 //        PagerAdapter adapter = view.getAdapter();
 //        if (adapter == null) {
 //            throw new IllegalStateException("ViewPager does not have adapter instance.");
 //        }
-//        mViewPager = view;
+//        mRecyclerView = view;
 //        view.setOnPageChangeListener(this);
 //        notifyDataSetChanged();
 //    }
@@ -131,8 +130,8 @@ public class RecyclerIconPageIndicator extends HorizontalScrollView implements R
 
     public void notifyDataSetChanged() {
         mIconsLayout.removeAllViews();
-        IconPagerAdapter iconAdapter = (IconPagerAdapter) mViewPager.getAdapter();
-        int count = mViewPager.getAdapter().getItemCount();
+        IconPagerAdapter iconAdapter = (IconPagerAdapter) mRecyclerView.getAdapter();
+        int count = mRecyclerView.getAdapter().getItemCount();
         for (int i = 0; i < count; i++) {
             ImageView view = new ImageView(getContext(), null, R.attr.vpiIconPageIndicatorStyle);
             view.setImageResource(iconAdapter.getIconResId(i));
@@ -148,21 +147,22 @@ public class RecyclerIconPageIndicator extends HorizontalScrollView implements R
 
     @Override
     public void setViewPager(RecyclerView view) {
-        if (mViewPager == view) {
+        if (mRecyclerView == view) {
             return;
         }
-        if (mViewPager != null) {
-            wrapViewPager(mViewPager).clearOnPageChangedListeners();
+        if (mRecyclerView != null) {
+            wrapViewPager(mRecyclerView).clearOnPageChangedListeners();;
+            wrapViewPager(mRecyclerView).clearOnScrollListeners();
         }
 
         if (view.getAdapter() == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
 
-        mViewPager = view;
+        mRecyclerView = view;
         notifyDataSetChanged();
         animateIcon(mSelectedIndex);
-        wrapViewPager(mViewPager).addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
+        wrapViewPager(mRecyclerView).addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
             @Override
             public void OnPageChanged(int oldPosition, int newPosition) {
                 mSelectedIndex = newPosition;
@@ -175,7 +175,7 @@ public class RecyclerIconPageIndicator extends HorizontalScrollView implements R
             }
         });
 
-        wrapViewPager(mViewPager).addOnScrollListener(new RecyclerView.OnScrollListener() {
+        wrapViewPager(mRecyclerView).addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -188,7 +188,7 @@ public class RecyclerIconPageIndicator extends HorizontalScrollView implements R
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (mListener != null) {
-                    mListener.onPageScrolled(wrapViewPager(mViewPager).getCurrentPosition(), 0f, dx);
+                    mListener.onPageScrolled(wrapViewPager(mRecyclerView).getCurrentPosition(), 0f, dx);
                 }
             }
         });
@@ -202,11 +202,11 @@ public class RecyclerIconPageIndicator extends HorizontalScrollView implements R
 
     @Override
     public void setCurrentItem(int item) {
-        if (mViewPager == null) {
+        if (mRecyclerView == null) {
             throw new IllegalStateException("ViewPager has not been bound.");
         }
         mSelectedIndex = item;
-        mViewPager.scrollToPosition(item);
+        mRecyclerView.scrollToPosition(item);
 
         animateIcon (item);
     }
@@ -222,6 +222,10 @@ public class RecyclerIconPageIndicator extends HorizontalScrollView implements R
                 animateToIcon(item);
             }
         }
+    }
+
+    public void setmListener(OnPageChangeListener mListener) {
+        this.mListener = mListener;
     }
 
     private RecyclerViewPager wrapViewPager ( RecyclerView view) {

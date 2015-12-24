@@ -36,10 +36,15 @@
 
     <style name="StyledIndicators" parent="Theme.AppCompat">
         <!-- reference 指向不同的style  -->
+        <!-- circle -->
         <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
+        <!-- line -->
         <item name="vpiLinePageIndicatorStyle">@style/CustomLinePageIndicator</item>
+        <!-- title -->
         <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
+        <!-- tab -->
         <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
+        <!-- underline -->
         <item name="vpiUnderlinePageIndicatorStyle">@style/CustomUnderlinePageIndicator</item>
     </style>
 
@@ -52,6 +57,16 @@
         <item name="centered">true</item>
     </style>
 
+    <!-- LinePageIndicator's style -->
+    <style name="CustomLinePageIndicator"  parent="Theme.AppCompat">
+        <item name="strokeWidth">4dp</item>
+        <item name="lineWidth">30dp</item>
+        <item name="unselectedColor">#FF888888</item>
+        <item name="selectedColor">#FF880000</item>
+    </style>
+
+
+    <!-- CustomTitlePageIndicator's style-->
     <style name="CustomTitlePageIndicator">
         <item name="android:background">#18FF0000</item>
         <item name="footerColor">#FFAA2222</item>
@@ -63,15 +78,9 @@
         <item name="selectedBold">true</item>
     </style>
 
-    <!-- LinePageIndicator's style -->
-    <style name="CustomLinePageIndicator"  parent="Theme.AppCompat">
-        <item name="strokeWidth">4dp</item>
-        <item name="lineWidth">30dp</item>
-        <item name="unselectedColor">#FF888888</item>
-        <item name="selectedColor">#FF880000</item>
-    </style>
 
 
+    <!-- CustomTabPageIndicator's style-->
     <style name="CustomTabPageIndicator" parent="Widget.TabPageIndicator">
         <item name="android:background">@drawable/custom_tab_indicator</item>
         <item name="android:textAppearance">@style/CustomTabPageIndicator.Text</item>
@@ -97,6 +106,4 @@
         <item name="fadeLength">1000</item>
         <item name="fadeDelay">1000</item>
     </style>
-
-
 </resources>

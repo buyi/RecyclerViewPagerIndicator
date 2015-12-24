@@ -17,6 +17,7 @@
 package com.viewpagerindicator.as.recycler.indicator;
 
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -56,11 +57,9 @@ public class RecyclerTabPageIndicator extends HorizontalScrollView implements Re
     private final OnClickListener mTabClickListener = new OnClickListener() {
         public void onClick(View view) {
             TabView tabView = (TabView)view;
-            final int oldSelected = ((RecyclerViewPager)mRecyclerView).getCurrentPosition();
-            //mViewPager.getCurrentItem();
+            final int oldSelected = wrapViewPager(mRecyclerView).getCurrentPosition();
             final int newSelected = tabView.getIndex();
             mRecyclerView.scrollToPosition(newSelected);
-//            mViewPager.setCurrentItem(newSelected);
             if (oldSelected == newSelected && mTabReselectedListener != null) {
                 mTabReselectedListener.onTabReselected(newSelected);
             }
@@ -69,9 +68,8 @@ public class RecyclerTabPageIndicator extends HorizontalScrollView implements Re
 
     private final com.viewpagerindicator.as.recycler.indicator.IcsLinearLayout mTabLayout;
 
-//    private ViewPager mViewPager;
     private RecyclerView mRecyclerView;
-//    private OnPageChangeListener mListener;
+    private ViewPager.OnPageChangeListener mListener;
 
     private int mMaxTabWidth;
     private int mSelectedTabIndex;
@@ -203,14 +201,15 @@ public class RecyclerTabPageIndicator extends HorizontalScrollView implements Re
 //        }
         final int count = mRecyclerView.getAdapter().getItemCount();
         for (int i = 0; i < count; i++) {
-            CharSequence title = "hello";//adapter.getPageTitle(i);
+            IconPagerAdapter iconAdapter = ((IconPagerAdapter)mRecyclerView.getAdapter());
+            CharSequence title = iconAdapter.getPageTitle(i);
             if (title == null) {
                 title = EMPTY_TITLE;
             }
-            int iconResId = R.mipmap.ic_launcher;
-//            if (iconAdapter != null) {
-//                iconResId = iconAdapter.getIconResId(i);
-//            }
+            int iconResId = 0;
+            if (iconAdapter != null) {
+                iconResId = iconAdapter.getIconResId(i);
+            }
             addTab(i, title, iconResId);
         }
         if (mSelectedTabIndex > count) {
@@ -231,24 +230,44 @@ public class RecyclerTabPageIndicator extends HorizontalScrollView implements Re
             return;
         }
         if (mRecyclerView != null) {
-//            mRecyclerView.setOnPageChangeListener(null);
+            wrapViewPager(mRecyclerView).clearOnPageChangedListeners();;
+            wrapViewPager(mRecyclerView).clearOnScrollListeners();
         }
 
-//        final PagerAdapter adapter = view.getAdapter();
-//        if (adapter == null) {
-//            throw new IllegalStateException("ViewPager does not have adapter instance.");
-//        }
+
+        if (view.getAdapter() == null) {
+            throw new IllegalStateException("ViewPager does not have adapter instance.");
+        }
         mRecyclerView = view;
-        ((RecyclerViewPager)view).addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
+        wrapViewPager(mRecyclerView).addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
             @Override
             public void OnPageChanged(int oldPosition, int newPosition) {
-//                mSelectedTabIndex = newPosition;
-//                invalidate();
                 setCurrentItem(newPosition);
-//                invalidate();
+
+                if (mListener != null) {
+                    mListener.onPageSelected(newPosition);
+                }
             }
         });
-        //.setOnPageChangeListener(this);
+
+        wrapViewPager(mRecyclerView).addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (mListener != null) {
+                    mListener.onPageScrollStateChanged(newState);
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (mListener != null) {
+                    mListener.onPageScrolled(wrapViewPager(mRecyclerView).getCurrentPosition(), 0f, dx);
+                }
+            }
+        });
         notifyDataSetChanged();
     }
 
@@ -305,5 +324,16 @@ public class RecyclerTabPageIndicator extends HorizontalScrollView implements Re
         public int getIndex() {
             return mIndex;
         }
+    }
+
+    public void setmListener(ViewPager.OnPageChangeListener mListener) {
+        this.mListener = mListener;
+    }
+
+    private RecyclerViewPager wrapViewPager ( RecyclerView view) {
+        if (view  instanceof  RecyclerViewPager) {
+            return (RecyclerViewPager) view;
+        }
+        throw  new IllegalArgumentException("this view is not RecyclerViewPager type");
     }
 }

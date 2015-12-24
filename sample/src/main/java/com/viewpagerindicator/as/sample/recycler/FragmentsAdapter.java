@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import com.viewpagerindicator.as.IconPagerAdapter;
+import com.viewpagerindicator.as.recycler.indicator.IconPagerAdapter;
 import com.viewpagerindicator.as.recycler.pageview.CheeseListFragment;
 import com.viewpagerindicator.as.recycler.pageview.FragmentStatePagerAdapter;
 import com.viewpagerindicator.as.sample.R;
@@ -56,7 +56,7 @@ class FragmentsAdapter extends FragmentStatePagerAdapter implements IconPagerAda
         }
     }
 
-
+    @Override
     public String getPageTitle(int position) {
         return "item-" + position;
     }

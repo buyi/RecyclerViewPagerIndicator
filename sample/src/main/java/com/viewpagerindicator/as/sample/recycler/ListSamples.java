@@ -1,4 +1,4 @@
-package com.viewpagerindicator.as.sample;
+package com.viewpagerindicator.as.sample.recycler;
 
 import android.app.ListActivity;
 import android.content.Intent;
