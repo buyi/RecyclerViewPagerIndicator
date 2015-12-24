@@ -3,6 +3,7 @@ package com.viewpagerindicator.as.recycler.pageview;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+// 处理view状态的工具方法
 public class ViewUtils {
 
     /**
@@ -10,12 +11,10 @@ public class ViewUtils {
      */
     public static View getCenterXChild(RecyclerView recyclerView) {
         int childCount = recyclerView.getChildCount();
-        if (childCount > 0) {
-            for (int i = 0; i < childCount; i++) {
-                View child = recyclerView.getChildAt(i);
-                if (isChildInCenterX(recyclerView, child)) {
-                    return child;
-                }
+        for (int i = 0; i < childCount; i++) {
+            View child = recyclerView.getChildAt(i);
+            if (isChildInCenterX(recyclerView, child)) {
+                return child;
             }
         }
         return null;
@@ -26,49 +25,16 @@ public class ViewUtils {
      */
     public static int getCenterXChildPosition(RecyclerView recyclerView) {
         int childCount = recyclerView.getChildCount();
-        if (childCount > 0) {
-            for (int i = 0; i < childCount; i++) {
-                View child = recyclerView.getChildAt(i);
-                if (isChildInCenterX(recyclerView, child)) {
-                    return recyclerView.getChildAdapterPosition(child);
-                }
+        for (int i = 0; i < childCount; i++) {
+            View child = recyclerView.getChildAt(i);
+            if (isChildInCenterX(recyclerView, child)) {
+                return recyclerView.getChildAdapterPosition(child);
             }
         }
         return childCount;
     }
 
-    /**
-     * Get center child in Y Axes
-     */
-    public static View getCenterYChild(RecyclerView recyclerView) {
-        int childCount = recyclerView.getChildCount();
-        if (childCount > 0) {
-            for (int i = 0; i < childCount; i++) {
-                View child = recyclerView.getChildAt(i);
-                if (isChildInCenterY(recyclerView, child)) {
-                    return child;
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Get position of center child in Y Axes
-     */
-    public static int getCenterYChildPosition(RecyclerView recyclerView) {
-        int childCount = recyclerView.getChildCount();
-        if (childCount > 0) {
-            for (int i = 0; i < childCount; i++) {
-                View child = recyclerView.getChildAt(i);
-                if (isChildInCenterY(recyclerView, child)) {
-                    return recyclerView.getChildAdapterPosition(child);
-                }
-            }
-        }
-        return childCount;
-    }
-
+    // 判断是否在中央 （x方向）
     public static boolean isChildInCenterX(RecyclerView recyclerView, View view) {
         int childCount = recyclerView.getChildCount();
         int[] lvLocationOnScreen = new int[2];
@@ -84,6 +50,36 @@ public class ViewUtils {
         return false;
     }
 
+    /**
+     * Get center child in Y Axes
+     */
+    public static View getCenterYChild(RecyclerView recyclerView) {
+        int childCount = recyclerView.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View child = recyclerView.getChildAt(i);
+            if (isChildInCenterY(recyclerView, child)) {
+                return child;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get position of center child in Y Axes
+     */
+    public static int getCenterYChildPosition(RecyclerView recyclerView) {
+        int childCount = recyclerView.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View child = recyclerView.getChildAt(i);
+            if (isChildInCenterY(recyclerView, child)) {
+                return recyclerView.getChildAdapterPosition(child);
+            }
+        }
+        return childCount;
+    }
+
+
+    // 判断是否在中央 （y方向）
     public static boolean isChildInCenterY(RecyclerView recyclerView, View view) {
         int childCount = recyclerView.getChildCount();
         int[] lvLocationOnScreen = new int[2];

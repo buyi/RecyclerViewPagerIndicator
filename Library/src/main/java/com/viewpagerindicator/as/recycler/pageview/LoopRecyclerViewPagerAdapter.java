@@ -2,6 +2,7 @@ package com.viewpagerindicator.as.recycler.pageview;
 
 import android.support.v7.widget.RecyclerView;
 
+// 循环viewpager
 public class LoopRecyclerViewPagerAdapter<VH extends RecyclerView.ViewHolder>
         extends RecyclerViewPagerAdapter<VH> {
 
@@ -13,13 +14,13 @@ public class LoopRecyclerViewPagerAdapter<VH extends RecyclerView.ViewHolder>
         return super.getItemCount();
     }
 
-    public int getActualItemViewType(int position) {
-        return super.getItemViewType(position);
-    }
-
-    public long getActualItemId(int position) {
-        return super.getItemId(position);
-    }
+//    public int getActualItemViewType(int position) {
+//        return super.getItemViewType(position);
+//    }
+//
+//    public long getActualItemId(int position) {
+//        return super.getItemId(position);
+//    }
 
     @Override
     public int getItemCount() {

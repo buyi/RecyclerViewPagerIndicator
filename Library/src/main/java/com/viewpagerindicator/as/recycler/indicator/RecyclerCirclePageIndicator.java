@@ -389,11 +389,11 @@ public class RecyclerCirclePageIndicator extends View implements RecyclerPageInd
             @Override
             public void OnPageChanged(int oldPosition, int newPosition) {
 //                if (mSnap || mScrollState == RecyclerView.SCROLL_STATE_SETTLING) {
-                if (mSnap) {
+//                if (mSnap) {
                     mCurrentPage  = newPosition;
                     mSnapPage  = newPosition;
                     invalidate();
-                }
+//                }
 
                 if (mListener != null) {
                     mListener.onPageSelected(newPosition);

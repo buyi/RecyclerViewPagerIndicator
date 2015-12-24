@@ -43,7 +43,7 @@ import java.util.Set;
  */
 @TargetApi(12)
 public abstract class FragmentStatePagerAdapter extends RecyclerView.Adapter<FragmentStatePagerAdapter.FragmentViewHolder> {
-    private static final String TAG = "FragmentStatePagerAdapter";
+    private static final String TAG = "PagerAdapter";
     private static final boolean DEBUG = false;
 
     private final FragmentManager mFragmentManager;
@@ -75,11 +75,11 @@ public abstract class FragmentStatePagerAdapter extends RecyclerView.Adapter<Fra
         if (mCurTransaction == null) {
             mCurTransaction = mFragmentManager.beginTransaction();
         }
-        if (DEBUG) Log.v("test", "Removing item #");
+        if (DEBUG) Log.v(TAG, "Removing item #");
         int tagId = genTagId(holder.getAdapterPosition());
         Fragment f = mFragmentManager.findFragmentByTag(tagId + "");
         if (f != null) {
-            if (DEBUG) Log.v("test", "Removing fragment #");
+            if (DEBUG) Log.v(TAG, "Removing fragment #");
             mStates.put(tagId, mFragmentManager.saveFragmentInstanceState(f));
             mCurTransaction.remove(f);
             mCurTransaction.commitAllowingStateLoss();
@@ -156,7 +156,7 @@ public abstract class FragmentStatePagerAdapter extends RecyclerView.Adapter<Fra
 
         @Override
         public void onViewDetachedFromWindow(View v) {
-            if (DEBUG) Log.v("test", "Removing fragment #");
+            if (DEBUG) Log.v(TAG, "Removing fragment #");
             final int tagId = genTagId(getLayoutPosition());
             Fragment frag = mFragmentManager.findFragmentByTag(tagId + "");
             if (frag == null) {

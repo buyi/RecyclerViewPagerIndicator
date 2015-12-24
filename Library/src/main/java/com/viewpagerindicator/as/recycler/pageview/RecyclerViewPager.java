@@ -24,29 +24,52 @@ import java.util.List;
  * @author Green
  */
 public class RecyclerViewPager extends RecyclerView {
-    public static final boolean DEBUG = true;//BuildConfig.DEBUG;
+    public static final boolean DEBUG = false;
 
+    // RecyclerViewPager 数据绑定器
     private RecyclerViewPagerAdapter<?> mViewPagerAdapter;
+
+    // 触发偏移量
     private float mTriggerOffset = 0.25f;
+
+    // 快速滑动参数
     private float mFlingFactor = 0.15f;
+
+    // 滑动距离 判断超过某个阈值就加加减减
     private float mTouchSpan;
+
+    // 监听器列表
     private List<OnPageChangedListener> mOnPageChangedListeners;
+
+    // 滑动时的目标地址
     private int mSmoothScrollTargetPosition = -1;
+
+     // 滑动之前的位置
     private int mPositionBeforeScroll = -1;
 
+    // 默认是false 是否只能单页滑动
     private boolean mSinglePageFling;
 
+    // 需要调整标记
     boolean mNeedAdjust;
+    // move时算滑动偏移量
     int mFisrtLeftWhenDragging;
     int mFirstTopWhenDragging;
+    // 判断当前view
     View mCurView;
+
+    // 设置阈值
     int mMaxLeftWhenDragging = Integer.MIN_VALUE;
     int mMinLeftWhenDragging = Integer.MAX_VALUE;
     int mMaxTopWhenDragging = Integer.MIN_VALUE;
     int mMinTopWhenDragging = Integer.MAX_VALUE;
+
+    // 点击时的位置
     private int mPositionOnTouchDown = -1;
+    // 标记是否回调过mHasCalledOnPageChanged接口
     private boolean mHasCalledOnPageChanged = true;
 
+    // RecyclerViewPager构造方法
     public RecyclerViewPager(Context context) {
         this(context, null);
     }
@@ -61,6 +84,7 @@ public class RecyclerViewPager extends RecyclerView {
         setNestedScrollingEnabled(false);
     }
 
+    //  处理自定义属性
     private void initAttrs(Context context, AttributeSet attrs, int defStyle) {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RecyclerViewPager, defStyle,
                 0);
@@ -128,6 +152,14 @@ public class RecyclerViewPager extends RecyclerView {
         super.swapAdapter(mViewPagerAdapter, removeAndRecycleExistingViews);
     }
 
+    @NonNull
+    protected RecyclerViewPagerAdapter ensureRecyclerViewPagerAdapter(Adapter adapter) {
+        return (adapter instanceof RecyclerViewPagerAdapter)
+                ? (RecyclerViewPagerAdapter) adapter
+                : new RecyclerViewPagerAdapter(this, adapter);
+
+    }
+
     @Override
     public Adapter getAdapter() {
         if (mViewPagerAdapter != null) {
@@ -140,8 +172,12 @@ public class RecyclerViewPager extends RecyclerView {
         return mViewPagerAdapter;
     }
 
+
+
     @Override
     public boolean fling(int velocityX, int velocityY) {
+        if (DEBUG)
+            Log.d("RecyclerViewPager", "fling");
         boolean flinging = super.fling((int) (velocityX * mFlingFactor), (int) (velocityY * mFlingFactor));
         if (flinging) {
             if (getLayoutManager().canScrollHorizontally()) {
@@ -152,8 +188,8 @@ public class RecyclerViewPager extends RecyclerView {
         }
 
         if (DEBUG) {
-            Log.d("@", "velocityX:" + velocityX);
-            Log.d("@", "velocityY:" + velocityY);
+            Log.d("RecyclerViewPager", "velocityX:" + velocityX);
+            Log.d("RecyclerViewPager", "velocityY:" + velocityY);
         }
         return flinging;
     }
@@ -161,16 +197,18 @@ public class RecyclerViewPager extends RecyclerView {
     @Override
     public void smoothScrollToPosition(int position) {
         if (DEBUG) {
-            Log.d("@", "smoothScrollToPosition:" + position);
+            Log.d("RecyclerViewPager", "smoothScrollToPosition:" + position);
         }
         mSmoothScrollTargetPosition = position;
         super.smoothScrollToPosition(position);
     }
 
+
+    // 在这里处理给用户的位置回调，返回当前position与前position
     @Override
     public void scrollToPosition(int position) {
         if (DEBUG) {
-            Log.d("@", "scrollToPosition:" + position);
+            Log.d("RecyclerViewPager", "scrollToPosition:" + position);
         }
         mPositionBeforeScroll = getCurrentPosition();
         mSmoothScrollTargetPosition = position;
@@ -189,9 +227,8 @@ public class RecyclerViewPager extends RecyclerView {
                     if (mOnPageChangedListeners != null) {
                         for (OnPageChangedListener onPageChangedListener : mOnPageChangedListeners) {
                             if (onPageChangedListener != null) {
-                                Log.d("@", "mPositionBeforeScroll:" + mPositionBeforeScroll);
-                                Log.d("@", "getCurrentPosition:" + getCurrentPosition());
-
+                                Log.d("RecyclerViewPager", "mPositionBeforeScroll:" + mPositionBeforeScroll);
+                                Log.d("RecyclerViewPager", "getCurrentPosition:" + getCurrentPosition());
 
 
                                 onPageChangedListener.OnPageChanged(mPositionBeforeScroll, getCurrentPosition());
@@ -233,15 +270,14 @@ public class RecyclerViewPager extends RecyclerView {
                 flingCount = Math.max(-1, Math.min(1, flingCount));
                 targetPosition = flingCount == 0 ? curPosition : mPositionOnTouchDown + flingCount;
                 if (DEBUG) {
-                    Log.d("@", "flingCount:" + flingCount);
-                    Log.d("@", "original targetPosition:" + targetPosition);
+                    Log.d("RecyclerViewPager", "flingCount:" + flingCount);
+                    Log.d("RecyclerViewPager", "original targetPosition:" + targetPosition);
                 }
             }
             targetPosition = Math.max(targetPosition, 0);
             targetPosition = Math.min(targetPosition, mViewPagerAdapter.getItemCount() - 1);
             if (targetPosition == curPosition
-                    && ((mSinglePageFling
-                    && mPositionOnTouchDown == curPosition)
+                    && ((mSinglePageFling && mPositionOnTouchDown == curPosition)
                     || !mSinglePageFling)) {
                 View centerXChild = ViewUtils.getCenterXChild(this);
                 if (centerXChild != null) {
@@ -253,31 +289,14 @@ public class RecyclerViewPager extends RecyclerView {
                 }
             }
             if (DEBUG) {
-                Log.d("@", "mTouchSpan:" + mTouchSpan);
-                Log.d("@", "adjustPositionX:" + targetPosition);
+                Log.d("RecyclerViewPager", "mTouchSpan:" + mTouchSpan);
+                Log.d("RecyclerViewPager", "adjustPositionX:" + targetPosition);
             }
             smoothScrollToPosition(safeTargetPosition(targetPosition, mViewPagerAdapter.getItemCount()));
         }
     }
 
-    public void addOnPageChangedListener(OnPageChangedListener listener) {
-        if (mOnPageChangedListeners == null) {
-            mOnPageChangedListeners = new ArrayList<>();
-        }
-        mOnPageChangedListeners.add(listener);
-    }
 
-    public void removeOnPageChangedListener(OnPageChangedListener listener) {
-        if (mOnPageChangedListeners != null) {
-            mOnPageChangedListeners.remove(listener);
-        }
-    }
-
-    public void clearOnPageChangedListeners() {
-        if (mOnPageChangedListeners != null) {
-            mOnPageChangedListeners.clear();
-        }
-    }
 
     /***
      * adjust position before Touch event complete and fling action start.
@@ -310,8 +329,8 @@ public class RecyclerViewPager extends RecyclerView {
                 }
             }
             if (DEBUG) {
-                Log.d("@", "mTouchSpan:" + mTouchSpan);
-                Log.d("@", "adjustPositionY:" + targetPosition);
+                Log.d("RecyclerViewPager", "mTouchSpan:" + mTouchSpan);
+                Log.d("RecyclerViewPager", "adjustPositionY:" + targetPosition);
             }
             smoothScrollToPosition(safeTargetPosition(targetPosition, mViewPagerAdapter.getItemCount()));
         }
@@ -319,12 +338,15 @@ public class RecyclerViewPager extends RecyclerView {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+        // 这个地方记载当第一次按下的时候所处的position
+        if (DEBUG)
+            Log.d("RecyclerViewPager", "dispatchTouchEvent:" + ev);
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             mPositionOnTouchDown = getLayoutManager().canScrollHorizontally()
                     ? ViewUtils.getCenterXChildPosition(this)
                     : ViewUtils.getCenterYChildPosition(this);
             if (DEBUG) {
-                Log.d("@", "mPositionOnTouchDown:" + mPositionOnTouchDown);
+                Log.d("RecyclerViewPager", "mPositionOnTouchDown:" + mPositionOnTouchDown);
             }
         }
         return super.dispatchTouchEvent(ev);
@@ -332,6 +354,8 @@ public class RecyclerViewPager extends RecyclerView {
 
     @Override
     public boolean onTouchEvent(MotionEvent e) {
+        if (DEBUG)
+            Log.d("RecyclerViewPager", "onTouchEvent:" + e);
         // recording the max/min value in touch track
         if (e.getAction() == MotionEvent.ACTION_MOVE) {
             if (mCurView != null) {
@@ -344,9 +368,13 @@ public class RecyclerViewPager extends RecyclerView {
         return super.onTouchEvent(e);
     }
 
+    // 当滑动状态改变时所做的各种处理。
     @Override
     public void onScrollStateChanged(int state) {
+        if (DEBUG)
+            Log.d("RecyclerViewPager", "onScrollStateChanged:" + state);
         super.onScrollStateChanged(state);
+        // 当处于滑动状态时
         if (state == SCROLL_STATE_DRAGGING) {
             mNeedAdjust = true;
             mCurView = getLayoutManager().canScrollHorizontally() ? ViewUtils.getCenterXChild(this) :
@@ -358,7 +386,7 @@ public class RecyclerViewPager extends RecyclerView {
                     mHasCalledOnPageChanged = false;
                 }
                 if (DEBUG) {
-                    Log.d("@", "mPositionBeforeScroll:" + mPositionBeforeScroll);
+                    Log.d("RecyclerViewPager", "mPositionBeforeScroll:" + mPositionBeforeScroll);
                 }
                 mFisrtLeftWhenDragging = mCurView.getLeft();
                 mFirstTopWhenDragging = mCurView.getTop();
@@ -366,7 +394,7 @@ public class RecyclerViewPager extends RecyclerView {
                 mPositionBeforeScroll = -1;
             }
             mTouchSpan = 0;
-        } else if (state == SCROLL_STATE_SETTLING) {
+        } else if (state == SCROLL_STATE_SETTLING) { // 处于惯性状态
             mNeedAdjust = false;
             if (mCurView != null) {
                 if (getLayoutManager().canScrollHorizontally()) {
@@ -378,7 +406,7 @@ public class RecyclerViewPager extends RecyclerView {
                 mTouchSpan = 0;
             }
             mCurView = null;
-        } else if (state == SCROLL_STATE_IDLE) {
+        } else if (state == SCROLL_STATE_IDLE) { // 处于静止状态
             if (mNeedAdjust) {
                 int targetPosition = getLayoutManager().canScrollHorizontally() ? ViewUtils.getCenterXChildPosition(this) :
                         ViewUtils.getCenterYChildPosition(this);
@@ -405,7 +433,8 @@ public class RecyclerViewPager extends RecyclerView {
                 mCurView = null;
             } else if (mSmoothScrollTargetPosition != mPositionBeforeScroll) {
                 if (DEBUG) {
-                    Log.d("@", "onPageChanged:" + mSmoothScrollTargetPosition);
+                    Log.d("RecyclerViewPager", "onScrollStateChanged SCROLL_STATE_IDLE:" + mSmoothScrollTargetPosition);
+                    Log.d("RecyclerViewPager", "onScrollStateChanged SCROLL_STATE_IDLE:" + mPositionBeforeScroll);
                 }
                 if (mOnPageChangedListeners != null) {
                     for (OnPageChangedListener onPageChangedListener : mOnPageChangedListeners) {
@@ -425,14 +454,8 @@ public class RecyclerViewPager extends RecyclerView {
         }
     }
 
-    @NonNull
-    protected RecyclerViewPagerAdapter ensureRecyclerViewPagerAdapter(Adapter adapter) {
-        return (adapter instanceof RecyclerViewPagerAdapter)
-                ? (RecyclerViewPagerAdapter) adapter
-                : new RecyclerViewPagerAdapter(this, adapter);
 
-    }
-
+    // 获取滑过的个数 取greater and equals的值
     private int getFlingCount(int velocity, int cellSize) {
         if (velocity == 0) {
             return 0;
@@ -442,6 +465,7 @@ public class RecyclerViewPager extends RecyclerView {
                 - mTriggerOffset));
     }
 
+    // 确保不超过边界
     private int safeTargetPosition(int position, int count) {
         if (position < 0) {
             return 0;
@@ -452,8 +476,28 @@ public class RecyclerViewPager extends RecyclerView {
         return position;
     }
 
+    // 通知当前position
     public interface OnPageChangedListener {
         void OnPageChanged(int oldPosition, int newPosition);
     }
 
+    //处理接口的方法
+    public void addOnPageChangedListener(OnPageChangedListener listener) {
+        if (mOnPageChangedListeners == null) {
+            mOnPageChangedListeners = new ArrayList<>();
+        }
+        mOnPageChangedListeners.add(listener);
+    }
+
+    public void removeOnPageChangedListener(OnPageChangedListener listener) {
+        if (mOnPageChangedListeners != null) {
+            mOnPageChangedListeners.remove(listener);
+        }
+    }
+
+    public void clearOnPageChangedListeners() {
+        if (mOnPageChangedListeners != null) {
+            mOnPageChangedListeners.clear();
+        }
+    }
 }

@@ -22,7 +22,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,30 +30,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.viewpagerindicator.as.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class CheeseListFragment extends Fragment {
     private int mIndex;
+    protected static final String[] CONTENT = new String[] { "This", "Is", "A", "Test", };
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RecyclerView rv = (RecyclerView) inflater.inflate(
-                R.layout.fragment_cheese_list, container, false);
+                R.layout.test_fragment, container, false);
         setupRecyclerView(rv);
         if (savedInstanceState == null) {
             mIndex = getArguments().getInt("index");
-            System.out.println("onCreateView is null mIndex:" + mIndex);
 //            ((AppCompatActivity) getActivity()).getSupportActionBar()
 //                    .setTitle("from arguments:" + mIndex);
         } else {
             mIndex = savedInstanceState.getInt("index");
-            System.out.println("onCreateView is not null mIndex:" + mIndex);
 //            ((AppCompatActivity) getActivity()).getSupportActionBar()
 //                    .setTitle("from savedInstanceState:" + mIndex);
         }
@@ -62,33 +58,27 @@ public class CheeseListFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-//        System.out.println("onResume mIndex:" + mIndex);
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("index", mIndex);
-        Log.d("test", "call onSaveInstanceState:" + mIndex);
+//        Log.d("test", "call onSaveInstanceState:" + mIndex);
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                getRandomSublist(Cheeses.sCheeseStrings, 30)));
+                generateData()));
     }
 
-    private List<String> getRandomSublist(String[] array, int amount) {
-        ArrayList<String> list = new ArrayList<>(amount);
-        Random random = new Random();
-        while (list.size() < amount) {
-            list.add(array[random.nextInt(array.length)]);
+    private List<String> generateData () {
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < 80; i++) {
+            list.add(CONTENT[ i % (CONTENT.length)]);
         }
         return list;
     }
 
+    // 每个framgnet的adapter
     public static class SimpleStringRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder> {
 
@@ -96,6 +86,7 @@ public class CheeseListFragment extends Fragment {
         private int mBackground;
         private List<String> mValues;
 
+        // 每个item的显示界面
         public static class ViewHolder extends RecyclerView.ViewHolder {
             public String mBoundString;
 
@@ -146,10 +137,10 @@ public class CheeseListFragment extends Fragment {
                 }
             });
 
-            Glide.with(holder.mImageView.getContext())
-                    .load(Cheeses.getRandomCheeseDrawable())
-                    .fitCenter()
-                    .into(holder.mImageView);
+//            Glide.with(holder.mImageView.getContext())
+//                    .load(Cheeses.getRandomCheeseDrawable())
+//                    .fitCenter()
+//                    .into(holder.mImageView);
         }
 
         @Override
