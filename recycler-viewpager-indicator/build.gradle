@@ -1,0 +1,65 @@
+apply plugin: 'com.android.library'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'recycler-viewpager-indicator'
+
+    publishedGroupId = 'com.buyi.recyclerviewpagerindicator'
+    libraryName = 'RecyclerViewpagerIndicatorLibrary'
+    artifact = 'recycler-viewpager-indicator'
+
+    libraryDescription = 'New RecyclerViewPager Indicator replace old listview.'
+
+    siteUrl = 'https://github.com/buyi/RecyclerViewPagerIndicator'
+    gitUrl = 'https://github.com/buyi/RecyclerViewPagerIndicator.git'
+
+    libraryVersion = '1.0'
+
+    developerId = 'buyi'
+    developerName = 'buyi'
+    developerEmail = 'huaqirong@126.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+
+
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+//        applicationId "com.buyi.recyclerviewpagerindicator"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:design:23.1.0'
+
+    // just for CheeseListFragment
+    compile 'com.github.bumptech.glide:glide:3.6.0'
+    compile 'com.inthecheesefactory.thecheeselibrary:fb-like:0.9.3'
+}
+
+//tasks.each { print it };
+
+//tasks.findByPath(":javadoc").enabled = false
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

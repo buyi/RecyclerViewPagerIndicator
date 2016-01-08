@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name=".recycler.ListSamples"
+            android:name=".ListSamples"
             android:label="@string/app_name"
             android:theme="@style/StyledIndicators" >
             <intent-filter>
@@ -23,7 +23,7 @@
         <!-- CIRCLE INDICATOR -->
 
         <activity
-            android:name=".recycler.SampleCirclesDefaultRecycler"
+            android:name=".SampleCirclesDefaultRecycler"
             android:theme="@style/StyledIndicators"
             android:label="Circles/DefaultRecycler">
             <intent-filter>
@@ -34,7 +34,7 @@
 
 
         <activity
-            android:name=".recycler.SampleCirclesInitialPageRecycler"
+            android:name=".SampleCirclesInitialPageRecycler"
             android:label="Circles/InitialPageRecycler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,7 +47,7 @@
         <!-- ICON INDICATOR -->
 
         <activity
-            android:name=".recycler.SampleIconsDefaultRecycler"
+            android:name=".SampleIconsDefaultRecycler"
             android:label="Icons/DefaultRecycler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,7 +59,7 @@
         <!-- LINE INDICATOR -->
 
         <activity
-            android:name=".recycler.SampleLinesDefaultRecycler"
+            android:name=".SampleLinesDefaultRecycler"
             android:theme="@style/CustomLinePageIndicator"
             android:label="Lines/DefaultRecycler">
             <intent-filter>
@@ -72,7 +72,7 @@
         <!-- TITLE INDICATOR -->
 
         <activity
-            android:name=".recycler.SampleTitlesDefaultRecycler"
+            android:name=".SampleTitlesDefaultRecycler"
             android:label="Titles/DefaultRecycler"
             android:theme="@style/StyledIndicators">
             <intent-filter>
@@ -85,7 +85,7 @@
 
         <!-- TAB INDICATOR -->
         <activity
-            android:name=".recycler.SampleTabsDefaultRecycler"
+            android:name=".SampleTabsDefaultRecycler"
             android:label="Tabs/DefaultRecycler"
             android:theme="@style/Theme.PageIndicatorDefaults">
             <intent-filter>
@@ -98,7 +98,7 @@
         <!-- UNDERLINE INDICATOR -->
 
         <activity
-            android:name=".recycler.SampleUnderlinesDefaultRecycler"
+            android:name=".SampleUnderlinesDefaultRecycler"
             android:label="Underlines/DefaultRecycler"
             android:theme="@style/StyledIndicators">
             <intent-filter>

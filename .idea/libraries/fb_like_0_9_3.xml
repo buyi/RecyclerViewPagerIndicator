@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="fb-like-0.9.3">
+    <ANNOTATIONS>
+      <root url="jar://$PROJECT_DIR$/recycler-viewpager-indicator/build/intermediates/exploded-aar/com.inthecheesefactory.thecheeselibrary/fb-like/0.9.3/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/recycler-viewpager-indicator/build/intermediates/exploded-aar/com.inthecheesefactory.thecheeselibrary/fb-like/0.9.3/res" />
+      <root url="jar://$PROJECT_DIR$/recycler-viewpager-indicator/build/intermediates/exploded-aar/com.inthecheesefactory.thecheeselibrary/fb-like/0.9.3/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.inthecheesefactory.thecheeselibrary/fb-like/0.9.3/19c538289ba46623bcca2974e74aa15c8ca55e9c/fb-like-0.9.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

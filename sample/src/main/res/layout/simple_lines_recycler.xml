@@ -18,13 +18,13 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <com.viewpagerindicator.as.recycler.pageview.RecyclerViewPager
+    <com.viewpagerindicator.as.library.pageview.RecyclerViewPager
         android:id="@+id/viewpager"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <com.viewpagerindicator.as.recycler.indicator.RecyclerLinePageIndicator
+    <com.viewpagerindicator.as.library.indicator.RecyclerLinePageIndicator
         android:id="@+id/indicator"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

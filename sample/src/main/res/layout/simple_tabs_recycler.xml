@@ -20,12 +20,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <com.viewpagerindicator.as.recycler.indicator.RecyclerTabPageIndicator
+    <com.viewpagerindicator.as.library.indicator.RecyclerTabPageIndicator
         android:id="@+id/indicator"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         />
-    <com.viewpagerindicator.as.recycler.pageview.RecyclerViewPager
+    <com.viewpagerindicator.as.library.pageview.RecyclerViewPager
         android:id="@+id/viewpager"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
