@@ -19,12 +19,20 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
-    compile project(':recycler-viewpager-indicator')
+    //compile project(':recycler-viewpager-indicator')
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile(group: 'com.buyi.recyclerviewpagerindicator', name: 'recycler-viewpager-indicator', version: '1.0', ext: 'aar')
+
 
 }
