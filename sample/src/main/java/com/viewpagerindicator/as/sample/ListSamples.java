@@ -1,11 +1,13 @@
 package com.viewpagerindicator.as.sample;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -17,11 +19,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ListSamples extends ListActivity {
+//java.lang.IllegalStateException: This Activity already has an action bar supplied by the window decor. Do not request Window.FEATURE_SUPPORT_ACTION_BAR and set windowActionBar to false in your theme to use a Toolbar instead.
+public class ListSamples extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout_sample_list);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
         String path = intent.getStringExtra("com.jakewharton.android.viewpagerindicator.sample.Path");
@@ -30,10 +37,25 @@ public class ListSamples extends ListActivity {
             path = "";
         }
 
-        setListAdapter(new SimpleAdapter(this, getData(path),
-                android.R.layout.simple_list_item_1, new String[] { "title" },
-                new int[] { android.R.id.text1 }));
-        getListView().setTextFilterEnabled(true);
+        final ListView listview = (ListView) findViewById(android.R.id.list);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Map<String, Object> map = (Map<String, Object>) listview.getAdapter().getItem(position);
+
+                Intent intent = (Intent) map.get("intent");
+                startActivity(intent);
+            }
+
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+        });
+        listview.setAdapter(new SimpleAdapter(this, getData(path),
+                android.R.layout.simple_list_item_1, new String[]{"title"},
+                new int[]{android.R.id.text1}));
     }
 
     protected List<Map<String, Object>> getData(String prefix) {
@@ -122,12 +144,12 @@ public class ListSamples extends ListActivity {
         data.add(temp);
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        Map<String, Object> map = (Map<String, Object>)l.getItemAtPosition(position);
-
-        Intent intent = (Intent) map.get("intent");
-        startActivity(intent);
-    }
+//    @Override
+//    @SuppressWarnings("unchecked")
+//    protected void onListItemClick(ListView l, View v, int position, long id) {
+//        Map<String, Object> map = (Map<String, Object>)l.getItemAtPosition(position);
+//
+//        Intent intent = (Intent) map.get("intent");
+//        startActivity(intent);
+//    }
 }

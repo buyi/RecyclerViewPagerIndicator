@@ -34,7 +34,7 @@
     -->
 
 
-    <style name="StyledIndicators" parent="Theme.AppCompat">
+    <style name="StyledIndicators" parent="AppTheme">
         <!-- reference 指向不同的style  -->
         <!-- circle -->
         <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicator</item>

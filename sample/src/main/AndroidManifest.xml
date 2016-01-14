@@ -9,22 +9,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
 
+        <!-- http://stackoverflow.com/questions/26515058/this-activity-already-has-an-action-bar-supplied-by-the-window-decor -->
         <activity
             android:name=".ListSamples"
-            android:label="@string/app_name"
-            android:theme="@style/StyledIndicators" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+
 
         <!-- CIRCLE INDICATOR -->
 
         <activity
             android:name=".SampleCirclesDefaultRecycler"
-            android:theme="@style/StyledIndicators"
             android:label="Circles/DefaultRecycler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,7 +62,6 @@
 
         <activity
             android:name=".SampleLinesDefaultRecycler"
-            android:theme="@style/CustomLinePageIndicator"
             android:label="Lines/DefaultRecycler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -73,8 +74,7 @@
 
         <activity
             android:name=".SampleTitlesDefaultRecycler"
-            android:label="Titles/DefaultRecycler"
-            android:theme="@style/StyledIndicators">
+            android:label="Titles/DefaultRecycler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
