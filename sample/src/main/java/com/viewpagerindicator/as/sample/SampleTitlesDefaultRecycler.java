@@ -1,5 +1,6 @@
 package com.viewpagerindicator.as.sample;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -31,5 +32,6 @@ public class SampleTitlesDefaultRecycler extends BaseSampleActivity {
         pager.setLayoutManager(manager);
 
         indicator.setViewPager(pager);
+        indicator.setTextColor(Color.parseColor("#000"));
     }
 }

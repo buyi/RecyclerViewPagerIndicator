@@ -17,6 +17,14 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!--&lt;!&ndash; Application theme. parent="@android:style/Theme.Holo.Light"&ndash;&gt;-->
+    <!--<style name="CustomerToolbar" parent="Theme.AppCompat.Light.NoActionBar">-->
+
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+    <!--</style>-->
+    <!--<style name="TranslucentActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">-->
+        <!--<item name="android:background">@null</item>-->
+    <!--</style>-->
 
     <!-- Copyright (C) 2012 Jake Wharton
 

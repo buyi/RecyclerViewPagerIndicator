@@ -1,5 +1,6 @@
 package com.viewpagerindicator.as.sample;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -29,5 +30,6 @@ public class SampleCirclesDefaultRecycler extends BaseSampleActivity {
         pager.setLayoutManager(manager);
 
         indicator.setViewPager(pager);
+        indicator.setFillColor(Color.parseColor("35b558"));
     }
 }
