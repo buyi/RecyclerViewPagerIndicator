@@ -9,23 +9,23 @@
  
 2.Icon 图标提示器
 
- ![演示demo](uu.gif)
+ ![演示demo](icon.gif)
 
 3.Line 线段提示器
 
- ![演示demo](indicator3.gif)
+ ![演示demo](line.gif)
 
 4.Tab 标签提示器
 
- ![演示demo](indicator4.gif)
+ ![演示demo](tab.gif)
 
 5.Title 标题提示器
 
- ![演示demo](indicator5.gif)
+ ![演示demo](title.gif)
 
 6.Underline 下划线提示器
 
- ![演示demo](indicator6.gif)
+ ![演示demo](under.gif)
 
 # Thanks
 该工程项目修改及使用了以下项目：<br />
@@ -35,6 +35,13 @@ https://github.com/blipinsk/RecyclerViewHeader<br />
 对三位作者表示深切的感谢～
 
 # 使用方法
+Gradle usage：
+> 
+        dependencies {
+                compile 'com.buyi.recyclerviewpagerindicator:recycler-viewpager-indicator:1.1'
+        }
+
+
 Circle 圆圈提示器：
 > 
         FragmentsAdapter adapter = new FragmentsAdapter(getSupportFragmentManager());
