@@ -27,6 +27,7 @@
 
         <activity
             android:name=".SampleCirclesDefaultRecycler"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="Circles/DefaultRecycler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,6 +38,7 @@
 
         <activity
             android:name=".SampleCirclesInitialPageRecycler"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="Circles/InitialPageRecycler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,6 +52,7 @@
 
         <activity
             android:name=".SampleIconsDefaultRecycler"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="Icons/DefaultRecycler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,6 +65,7 @@
 
         <activity
             android:name=".SampleLinesDefaultRecycler"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="Lines/DefaultRecycler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -74,6 +78,7 @@
 
         <activity
             android:name=".SampleTitlesDefaultRecycler"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="Titles/DefaultRecycler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -100,7 +105,7 @@
         <activity
             android:name=".SampleUnderlinesDefaultRecycler"
             android:label="Underlines/DefaultRecycler"
-            android:theme="@style/StyledIndicators">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />

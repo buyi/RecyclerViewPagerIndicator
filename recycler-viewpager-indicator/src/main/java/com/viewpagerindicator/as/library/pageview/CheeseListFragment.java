@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.viewpagerindicator.as.R;
+import com.viewpagerindicator.as.library.RecyclerViewHeader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,19 +43,47 @@ public class CheeseListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RecyclerView rv = (RecyclerView) inflater.inflate(
-                R.layout.test_fragment, container, false);
-        setupRecyclerView(rv);
+
+//        View headerView = new View(getActivity());
+//        AbsListView.LayoutParams params = new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT, getActivity().gets().getHeight());
+//        headerView.setLayoutParams(params);
+////                headerView.setBackgroundColor(Color.parseColor("#77ff0000"));
+//        listView.addHeaderView(headerView);
+
+        final View view = inflater.inflate(R.layout.test_recyclerview, container, false);
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
+        setupRecyclerView(recyclerView);
+
+
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                RecyclerViewHeader header = (RecyclerViewHeader) view.findViewById(R.id.header);
+//                header.attachTo(recyclerView, true);
+//            }
+//        }, 500);
+
+        RecyclerViewHeader header = (RecyclerViewHeader) view.findViewById(R.id.header);
+        header.attachTo(recyclerView, true);
+
+
+
+//        RecyclerViewHeader header = new RecyclerViewHeader (getActivity());
+//        header.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ff0000")));
+//        header.attachTo(recyclerView, false);
+
         if (savedInstanceState == null) {
             mIndex = getArguments().getInt("index");
+            System.out.println("from arguments index1:" + mIndex);
 //            ((AppCompatActivity) getActivity()).getSupportActionBar()
 //                    .setTitle("from arguments:" + mIndex);
         } else {
             mIndex = savedInstanceState.getInt("index");
+            System.out.println("from savedInstanceState index1:" + mIndex);
 //            ((AppCompatActivity) getActivity()).getSupportActionBar()
 //                    .setTitle("from savedInstanceState:" + mIndex);
         }
-        return rv;
+        return view;
     }
 
     @Override

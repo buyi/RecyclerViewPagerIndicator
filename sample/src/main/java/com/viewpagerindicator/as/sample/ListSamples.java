@@ -4,17 +4,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -98,32 +95,32 @@ public class ListSamples extends AppCompatActivity {
 
 
         // because there is mearsure time
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // calculate status bar's height
-                Rect frame = new Rect();
-                getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
-                int statusBarHeight = frame.top;
-                System.out.println("statusBarHeight1 = " + statusBarHeight);
-
-                // caclute toolbar's height (1)
-                Rect rect =  new Rect();
-                toolbar.getGlobalVisibleRect(rect);
-                System.out.println("top:" + rect.top);
-                System.out.println("bottom:" + rect.bottom);
-                System.out.println("left:" + rect.left);
-                System.out.println("right:" + rect.right);
-
-                // caclute toolbar's height (2)
-                System.out.println("mActionBarSize2 = " + getSupportActionBar().getHeight());
-                View headerView = new View(ListSamples.this);
-                AbsListView.LayoutParams params = new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT, getSupportActionBar().getHeight());
-                headerView.setLayoutParams(params);
-//                headerView.setBackgroundColor(Color.parseColor("#77ff0000"));
-                listView.addHeaderView(headerView);
-            }
-        }, 50);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                // calculate status bar's height
+//                Rect frame = new Rect();
+//                getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+//                int statusBarHeight = frame.top;
+//                System.out.println("statusBarHeight1 = " + statusBarHeight);
+//
+//                // caclute toolbar's height (1)
+//                Rect rect =  new Rect();
+//                toolbar.getGlobalVisibleRect(rect);
+//                System.out.println("top:" + rect.top);
+//                System.out.println("bottom:" + rect.bottom);
+//                System.out.println("left:" + rect.left);
+//                System.out.println("right:" + rect.right);
+//
+//                // caclute toolbar's height (2)
+//                System.out.println("mActionBarSize2 = " + getSupportActionBar().getHeight());
+//                View headerView = new View(ListSamples.this);
+//                AbsListView.LayoutParams params = new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT, getSupportActionBar().getHeight());
+//                headerView.setLayoutParams(params);
+////                headerView.setBackgroundColor(Color.parseColor("#77ff0000"));
+//                listView.addHeaderView(headerView);
+//            }
+//        }, 50);
 
         // caclute toolbar's height (3)
 //        final TypedArray styledAttributes = getTheme().obtainStyledAttributes(

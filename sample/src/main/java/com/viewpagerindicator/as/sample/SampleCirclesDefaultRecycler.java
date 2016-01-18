@@ -3,6 +3,7 @@ package com.viewpagerindicator.as.sample;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 
 import com.viewpagerindicator.as.library.indicator.RecyclerCirclePageIndicator;
 import com.viewpagerindicator.as.library.pageview.RecyclerViewPager;
@@ -14,12 +15,18 @@ public class SampleCirclesDefaultRecycler extends BaseSampleActivity {
 
     @Bind(R.id.viewpager) RecyclerViewPager pager;
     @Bind(R.id.indicator) RecyclerCirclePageIndicator indicator;
+    @Bind(R.id.toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_circles_recycler);
         ButterKnife.bind(this);
+
+        // config toolbar
+        toolbar.setTitle(this.getTitle().subSequence(((String) this.getTitle()).indexOf('/') + 1, this.getTitle().length()));
+        setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
 
         FragmentsAdapter adapter = new FragmentsAdapter(getSupportFragmentManager());
@@ -30,6 +37,6 @@ public class SampleCirclesDefaultRecycler extends BaseSampleActivity {
         pager.setLayoutManager(manager);
 
         indicator.setViewPager(pager);
-        indicator.setFillColor(Color.parseColor("35b558"));
+        indicator.setFillColor(Color.parseColor("#FF33B5E5"));
     }
 }

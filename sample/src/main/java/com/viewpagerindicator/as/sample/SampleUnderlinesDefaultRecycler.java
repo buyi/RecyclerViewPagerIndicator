@@ -1,7 +1,9 @@
 package com.viewpagerindicator.as.sample;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 
 import com.viewpagerindicator.as.library.indicator.RecyclerUnderlinePageIndicator;
 import com.viewpagerindicator.as.library.pageview.RecyclerViewPager;
@@ -15,12 +17,20 @@ public class SampleUnderlinesDefaultRecycler extends BaseSampleActivity {
     RecyclerViewPager pager;
     @Bind(R.id.indicator)
     RecyclerUnderlinePageIndicator indicator;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_underlines_recycler);
 
         ButterKnife.bind(this);
+
+        // config toolbar
+        toolbar.setTitle(this.getTitle().subSequence(((String) this.getTitle()).indexOf('/') + 1, this.getTitle().length()));
+        setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
         FragmentsAdapter adapter = new FragmentsAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);

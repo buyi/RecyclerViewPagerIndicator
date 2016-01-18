@@ -13,7 +13,19 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/recyclerview"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top" />
+
+    <com.viewpagerindicator.as.library.RecyclerViewHeader
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize" />
+
+</FrameLayout>

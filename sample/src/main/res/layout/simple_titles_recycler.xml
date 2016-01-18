@@ -18,6 +18,20 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
+    <!-- space is white but know why -->
+    <View
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/status_bar_padding"
+        android:background="@color/colorPrimary" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize" />
+
     <com.viewpagerindicator.as.library.indicator.RecyclerTitlePageIndicator
         android:id="@+id/indicator"
         android:layout_width="fill_parent"

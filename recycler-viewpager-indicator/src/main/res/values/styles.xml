@@ -18,6 +18,8 @@
     <style name="Theme.PageIndicatorDefaults" parent="AppTheme">
         <item name="vpiIconPageIndicatorStyle">@style/Widget.IconPageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="Widget" parent="AppTheme.NoActionBar"></style>

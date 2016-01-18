@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import com.viewpagerindicator.as.library.indicator.IconPagerAdapter;
 import com.viewpagerindicator.as.library.pageview.CheeseListFragment;
 import com.viewpagerindicator.as.library.pageview.FragmentStatePagerAdapter;
-import com.viewpagerindicator.as.sample.R;
 
 import java.util.LinkedHashMap;
 
@@ -32,6 +31,7 @@ class FragmentsAdapter extends FragmentStatePagerAdapter implements IconPagerAda
     public Fragment getItem(int position, Fragment.SavedState savedState) {
         Fragment f = mFragmentCache.containsKey(position) ? mFragmentCache.get(position)
                 : new CheeseListFragment();
+        System.out.println("getItem:" + position + " from cache" + mFragmentCache.containsKey(position));
 //        Log.e("test", "getItem:" + position + " from cache" + mFragmentCache.containsKey
 //                (position));
         if (savedState == null || f.getArguments() == null) {
@@ -39,9 +39,11 @@ class FragmentsAdapter extends FragmentStatePagerAdapter implements IconPagerAda
             bundle.putInt("index", position);
             f.setArguments(bundle);
 //            Log.e("test", "setArguments:" + position);
+            System.out.println("setArguments:" + position);
         } else if (mFragmentCache.containsKey(position)) {
             f.setInitialSavedState(savedState);
 //            Log.e("test", "setInitialSavedState:" + position);
+            System.out.println("setInitialSavedState:" + position);
         }
         mFragmentCache.put(position, f);
         return f;
