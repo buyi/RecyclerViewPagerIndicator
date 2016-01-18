@@ -65,7 +65,6 @@ public class ListSamples extends AppCompatActivity {
         }
 
         final ListView listView = (ListView) findViewById(android.R.id.list);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -83,8 +82,6 @@ public class ListSamples extends AppCompatActivity {
         listView.setAdapter(new SimpleAdapter(this, getData(path),
                 android.R.layout.simple_list_item_1, new String[]{"title"},
                 new int[]{android.R.id.text1}));
-
-
 
 
         // how to acquire system attribute
@@ -139,14 +136,15 @@ public class ListSamples extends AppCompatActivity {
             //status bar height
             int actionBarHeight = getActionBarHeight();
             int statusBarHeight = getStatusBarHeight();
-            System.out.println("actionBarHeight:" + actionBarHeight);
-            System.out.println("statusBarHeight:" + statusBarHeight);
+//            System.out.println("actionBarHeight:" + actionBarHeight);
+//            System.out.println("statusBarHeight:" + statusBarHeight);
             //action bar height
             statusBar.getLayoutParams().height = statusBarHeight;
             statusBar.setBackgroundColor(color);
         }
     }
 
+    // acquire action/tool bar's height
     public int getActionBarHeight() {
         int actionBarHeight = 0;
         TypedValue tv = new TypedValue();
@@ -157,6 +155,7 @@ public class ListSamples extends AppCompatActivity {
         return actionBarHeight;
     }
 
+    // acquire status bar' height
     public int getStatusBarHeight() {
         int result = 0;
         int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -238,15 +237,14 @@ public class ListSamples extends AppCompatActivity {
         return result;
     }
 
-    private List<Map<String, Object>> getFakeData() {
-
-        List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-        for (int i = 0 ; i < 100; i++) {
-            addItem(data, i + "", browseIntent ( i + ""));
-        }
-       return data;
-
-    }
+    // just for test
+//    private List<Map<String, Object>> getFakeData() {
+//        List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+//        for (int i = 0 ; i < 100; i++) {
+//            addItem(data, i + "", browseIntent ( i + ""));
+//        }
+//       return data;
+//    }
 
     protected Intent browseIntent(String path) {
         Intent result = new Intent();

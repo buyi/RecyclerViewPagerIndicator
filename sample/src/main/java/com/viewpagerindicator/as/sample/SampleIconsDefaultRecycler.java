@@ -32,16 +32,16 @@ public class SampleIconsDefaultRecycler extends BaseSampleActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
+        // config adapter
         FragmentsAdapter adapter = new FragmentsAdapter(getSupportFragmentManager());
-//        mAdapter = new com.viewpagerindicator.as.sample.TestFragmentAdapter(getSupportFragmentManager());
-
-//        mPager = (ViewPager)findViewById(R.id.pager);
         pager.setAdapter(adapter);
+
+        // config layoutmanager
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation (LinearLayoutManager.HORIZONTAL);
         pager.setLayoutManager(manager);
 
-//        mIndicator = (IconPageIndicator)findViewById(R.id.indicator);
+        // config indicator
         indicator.setViewPager(pager);
     }
 }

@@ -34,9 +34,11 @@ public class SampleUnderlinesDefaultRecycler extends BaseSampleActivity {
 
         FragmentsAdapter adapter = new FragmentsAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
+
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation (LinearLayoutManager.HORIZONTAL);
         pager.setLayoutManager(manager);
+
         indicator.setViewPager(pager);
     }
 }

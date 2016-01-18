@@ -39,9 +39,9 @@ public class SampleCirclesInitialPageRecycler extends BaseSampleActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         pager.setLayoutManager(manager);
+        pager.scrollToPosition(pager.getLayoutManager().getItemCount() - 1);
 
         indicator.setViewPager(pager);
-        pager.scrollToPosition(pager.getLayoutManager().getItemCount() - 1);
         indicator.setFillColor(Color.parseColor("#FF33B5E5"));
     }
 }

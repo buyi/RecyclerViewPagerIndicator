@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="recycler-viewpager-indicator-1.1">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/sample/build/intermediates/exploded-aar/com.buyi.recyclerviewpagerindicator/recycler-viewpager-indicator/1.1/res" />
+      <root url="jar://$PROJECT_DIR$/sample/build/intermediates/exploded-aar/com.buyi.recyclerviewpagerindicator/recycler-viewpager-indicator/1.1/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.buyi.recyclerviewpagerindicator/recycler-viewpager-indicator/1.1/be4a8a92c5f473a9a612ef4b5f0a61105ff77f34/recycler-viewpager-indicator-1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

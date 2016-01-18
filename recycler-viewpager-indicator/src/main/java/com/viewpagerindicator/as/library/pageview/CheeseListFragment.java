@@ -31,7 +31,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.viewpagerindicator.as.R;
-import com.viewpagerindicator.as.library.RecyclerViewHeader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,12 +73,12 @@ public class CheeseListFragment extends Fragment {
 
         if (savedInstanceState == null) {
             mIndex = getArguments().getInt("index");
-            System.out.println("from arguments index1:" + mIndex);
+//            System.out.println("from arguments index1:" + mIndex);
 //            ((AppCompatActivity) getActivity()).getSupportActionBar()
 //                    .setTitle("from arguments:" + mIndex);
         } else {
             mIndex = savedInstanceState.getInt("index");
-            System.out.println("from savedInstanceState index1:" + mIndex);
+//            System.out.println("from savedInstanceState index1:" + mIndex);
 //            ((AppCompatActivity) getActivity()).getSupportActionBar()
 //                    .setTitle("from savedInstanceState:" + mIndex);
         }

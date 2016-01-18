@@ -1,4 +1,4 @@
-package com.viewpagerindicator.as.library;
+package com.viewpagerindicator.as.library.pageview;
 
 /**
  * Created by buyi on 16/1/18.
@@ -46,6 +46,8 @@ import com.viewpagerindicator.as.R;
 /**
  * Created by Bartosz Lipinski
  * 31.03.15
+ *
+ * just used for 1.add header padding 2.divider
  */
 public class RecyclerViewHeader extends RelativeLayout {
 

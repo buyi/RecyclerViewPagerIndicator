@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|top" />
 
-    <com.viewpagerindicator.as.library.RecyclerViewHeader
+    <com.viewpagerindicator.as.library.pageview.RecyclerViewHeader
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize" />

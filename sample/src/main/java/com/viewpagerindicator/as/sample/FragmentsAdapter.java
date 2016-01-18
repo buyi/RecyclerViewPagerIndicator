@@ -13,10 +13,12 @@ import java.util.LinkedHashMap;
 /**
  * Created by buyi on 15/12/23.
  */
+// 测试适配器，装载示例fragment
 class FragmentsAdapter extends FragmentStatePagerAdapter implements IconPagerAdapter {
+    // 缓存fragment，有个数限制（5）
     LinkedHashMap<Integer, Fragment> mFragmentCache = new LinkedHashMap<>();
 
-    protected static final int[] ICONS = new int[] {
+    protected static final int[] ICONS = new int[]{
             R.drawable.perm_group_calendar,
             R.drawable.perm_group_camera,
             R.drawable.perm_group_device_alarms,
@@ -31,19 +33,15 @@ class FragmentsAdapter extends FragmentStatePagerAdapter implements IconPagerAda
     public Fragment getItem(int position, Fragment.SavedState savedState) {
         Fragment f = mFragmentCache.containsKey(position) ? mFragmentCache.get(position)
                 : new CheeseListFragment();
-        System.out.println("getItem:" + position + " from cache" + mFragmentCache.containsKey(position));
-//        Log.e("test", "getItem:" + position + " from cache" + mFragmentCache.containsKey
-//                (position));
+//        System.out.println("getItem:" + position + " from cache" + mFragmentCache.containsKey(position));
         if (savedState == null || f.getArguments() == null) {
             Bundle bundle = new Bundle();
             bundle.putInt("index", position);
             f.setArguments(bundle);
-//            Log.e("test", "setArguments:" + position);
-            System.out.println("setArguments:" + position);
+//            System.out.println("setArguments:" + position);
         } else if (mFragmentCache.containsKey(position)) {
             f.setInitialSavedState(savedState);
-//            Log.e("test", "setInitialSavedState:" + position);
-            System.out.println("setInitialSavedState:" + position);
+//            System.out.println("setInitialSavedState:" + position);
         }
         mFragmentCache.put(position, f);
         return f;
@@ -59,13 +57,16 @@ class FragmentsAdapter extends FragmentStatePagerAdapter implements IconPagerAda
     }
 
     @Override
-    public String getPageTitle(int position) {
-        return "item-" + position;
-    }
-
-    @Override
     public int getItemCount() {
         return 10;
+    }
+
+
+    // implements IconPagerAdapter's method
+
+    @Override
+    public String getPageTitle(int position) {
+        return "item-" + position;
     }
 
     @Override

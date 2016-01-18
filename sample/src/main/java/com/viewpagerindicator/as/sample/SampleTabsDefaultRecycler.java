@@ -42,25 +42,4 @@ public class SampleTabsDefaultRecycler extends BaseSampleActivity {
 
         indicator.setViewPager(pager);
     }
-//
-//    class GoogleMusicAdapter extends FragmentPagerAdapter {
-//        public GoogleMusicAdapter(FragmentManager fm) {
-//            super(fm);
-//        }
-//
-//        @Override
-//        public Fragment getItem(int position) {
-//            return TestFragment.newInstance(CONTENT[position % CONTENT.length]);
-//        }
-//
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//            return CONTENT[position % CONTENT.length].toUpperCase();
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return CONTENT.length;
-//        }
-//    }
 }
