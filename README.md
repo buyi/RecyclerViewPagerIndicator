@@ -135,12 +135,6 @@ Underline 下划线提示器
 >                        
         indicator.setViewPager(pager);
 
-详见代码
-
-如何引入：
-暂时先引入代码，如果此项目很受欢迎的话，我会做源。
-
-
 
 # Contact
 <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=380595717&site=github&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:1032694760:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
